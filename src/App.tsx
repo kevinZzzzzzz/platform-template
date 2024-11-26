@@ -31,7 +31,7 @@ function App() {
               element={
                 <e.layout>
                   <Suspense fallback={<div></div>}>
-                    {e.component ? <e.component /> : null}
+                    <e.component />
                   </Suspense>
                 </e.layout>
               }

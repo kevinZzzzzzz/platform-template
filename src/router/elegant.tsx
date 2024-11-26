@@ -4,6 +4,7 @@ import {
   ROUTER_NAME_TO_PAGES_MAP,
   VIEW_PREFIX,
 } from "./imports";
+import KeepAlive, { AliveScope } from "react-activation";
 
 /**
  * 处理路由组件，根据页面路径获取页面组件
@@ -11,7 +12,7 @@ import {
  */
 export const handleRouteComponent = (component: string) => {
   if (!component) {
-    return null;
+    return <></>;
   }
   const pageName = component.replace(VIEW_PREFIX, "");
   if (!ROUTER_NAME_TO_PAGES_MAP[pageName]) {
