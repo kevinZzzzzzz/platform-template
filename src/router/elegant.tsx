@@ -4,13 +4,35 @@ import {
   ROUTER_NAME_TO_PAGES_MAP,
   VIEW_PREFIX,
 } from "./imports";
-import KeepAlive, { AliveScope } from "react-activation";
-
+// import KeepAliveComp from "@/components/KeepAliveComp";
+// console.log(KeepAliveComp);
+const KeepAliveComp = (props: any) => {
+  console.log(props, 123123);
+  return <>{props.children}</>;
+  // if (!props.mate?.KeepAlive) {
+  //   return props.children;
+  // }
+  // return (
+  //   <KeepAlive
+  //     cacheKey={props.path}
+  //     key={props.path}
+  //     name={props.path}
+  //     when={() => {
+  //       return props.mate?.keepAlive;
+  //     }}
+  //     autoFreeze={true}
+  //   >
+  //     {/* <AuthRouteComp {...props}> */}
+  //     {props.children}
+  //     {/* </AuthRouteComp> */}
+  //   </KeepAlive>
+  // );
+};
 /**
  * 处理路由组件，根据页面路径获取页面组件
  * @param component 页面路径
  */
-export const handleRouteComponent = (component: string) => {
+export const handleRouteComponent = (component: string, route) => {
   if (!component) {
     return <></>;
   }
@@ -48,7 +70,7 @@ export const handledRoutes = (routesList: GeneratedRoute[]) => {
     const item = {
       ...route,
       layout: handleLayoutComponent(route.layout),
-      component: handleRouteComponent(route.component),
+      component: handleRouteComponent(route.component, route),
       children: handledRoutes(route.children),
     };
     result.push(item);

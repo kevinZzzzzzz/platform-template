@@ -1,37 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-
+import { ThemeSetting } from "@/constants/theme";
 export const LayoutSlice = createSlice({
-  name: 'Layout',
+  name: "Layout",
   initialState: {
-    pagePath: '',
-    menuList: [],
-    flatMenu: [], // 扁平处理的菜单
-    headerTabList: [{ label: '首页', path: '/home',  key: '1' }], // 顶部tab栏
-    activeTabkey: '1',  // 当前激活的页面key
-    activePathInfo: {} // 当前激活的页面信息
+    ...ThemeSetting,
+    collapsed: false,
   },
   reducers: {
-    changeActivePath(state: any, {payload}) {
-      state.activePathInfo = payload.activePathInfo
+    // 张开闭合sider
+    changeCollapsed(state: any, { payload }) {
+      state.collapsed = payload.collapsed;
     },
-    changeActiveTabKey(state: any, {payload}) {
-      state.activeTabkey = payload.activeTabkey
+    // 切换主题
+    changeTheme(state: any, { payload }) {
+      state.theme = payload.theme;
     },
-    changeFlatMenu(state: any, {payload}) {
-      state.flatMenu = payload.flatMenu
-    },
-    changeHeaderTabList(state, {payload}) {
-      state.headerTabList = payload.headerTabList
-    },
-    changePagePath(state, {payload}) {
-      state.pagePath = payload.pagePath
-    },
-    changeMenuList(state, {payload}) {
-      state.menuList = payload.menuList
-    },
-  }
-})
+  },
+});
 
-export const { changeHeaderTabList, changePagePath, changeFlatMenu,changeActiveTabKey, changeActivePath, changeMenuList } = LayoutSlice.actions
-export default LayoutSlice.reducer
+export const { changeCollapsed, changeTheme } = LayoutSlice.actions;
+export default LayoutSlice.reducer;
