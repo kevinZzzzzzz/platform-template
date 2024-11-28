@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ThemeSetting } from "@/constants/theme";
+import { ColorByTheme, ThemeSetting } from "@/constants/theme";
 export const LayoutSlice = createSlice({
   name: "Layout",
   initialState: {

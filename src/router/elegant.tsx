@@ -1,3 +1,4 @@
+import IconComp from "@/layout/base/components/Icon";
 import {
   LAYOUT_NAME_MAP,
   LAYOUT_PREFIX,
@@ -93,3 +94,30 @@ export function handleFlattenRoutes(routerData: GeneratedRoute[]) {
     );
   }, []);
 }
+
+/**
+ * 初始化菜单栏
+ * @param data 路由表
+ * @param isChild 是否是子菜单
+ */
+export const initMenuList = (data: any, isChild = false) => {
+  let newMenuList: any = [];
+  for (const e of data.filter((d) => d.meta.needShow)) {
+    const obj = {
+      key: e.key,
+      icon: IconComp(e.meta.icon),
+      path: e.path,
+      children:
+        e.children && e.children.length ? initMenuList(e.children, true) : null,
+      disabled: !e.path && !(e.children && e.children.length),
+      label: e.name,
+      title: e.name,
+      type: null,
+    };
+    newMenuList.push(obj);
+  }
+  newMenuList = newMenuList.filter(
+    (d: any) => !d.children || (d.children && d.children.length)
+  );
+  return newMenuList;
+};

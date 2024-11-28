@@ -23,3 +23,10 @@ ul {
   box-sizing: border-box;
   font-family: 'PingFangSC-Regular', 'PingFang SC';
 }
+
+
+:root {
+  --layout-header-height: 56px;
+  --layout-tab-height: 44px;
+  --layout-footer-height: 48px;
+}

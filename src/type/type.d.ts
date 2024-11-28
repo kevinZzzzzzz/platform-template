@@ -1,5 +1,5 @@
 type GeneratedRoute = {
-  key: number;
+  key: string;
   path: string;
   name: string;
   component?: string;
@@ -11,6 +11,7 @@ type GeneratedRoute = {
     icon: string;
     keepAlive?: boolean;
     roles?: string[];
+    needShow: boolean;
   };
   children?: GeneratedRoute[];
 };
