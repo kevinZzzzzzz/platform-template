@@ -1,17 +1,14 @@
 import React, { PureComponent } from "react";
+import { useTranslation } from "react-i18next";
 
-class AboutPage extends PureComponent<any> {
-  constructor(props: any) {
-    super(props);
-  }
+const AboutPage = () => {
+  const { t } = useTranslation();
 
-  render() {
-    return (
-      <>
-        <h1>About Page</h1>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h1>{t("about")} Page</h1>
+    </>
+  );
+};
 
 export default AboutPage;

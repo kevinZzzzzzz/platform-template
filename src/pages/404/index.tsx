@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-function NotFoundPage (props: any) {
+function NotFoundPage(props: any) {
   return (
     <>
       <h1>Not Found</h1>
     </>
-  )
+  );
 }
 
-export default NotFoundPage
+export default NotFoundPage;

@@ -4,7 +4,7 @@ import GuardRouteComp from "./GuardRouteComp";
 
 function KeepAliveComp({ children, ...props }) {
   if (!props.meta.keepAlive) {
-    return props.children;
+    return children;
   }
   return (
     <KeepAlive

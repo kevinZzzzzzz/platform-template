@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { flattenRoutes as routes } from "./router/index";
 import api from "@/api";
 import { AliveScope } from "react-activation";
@@ -7,10 +7,11 @@ import KeepAliveComp from "@/components/KeepAliveComp";
 import LoadingComp from "./components/Loading";
 import { Spin, ConfigProvider, theme as Theme } from "antd";
 import "dayjs/locale/zh-cn";
-import locale from "antd/locale/zh_CN";
+// import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { ColorByTheme } from "./constants/theme";
-
+import "@/locales/config";
+import { useTranslation, Trans } from "react-i18next";
 declare global {
   interface Window {
     $api: any;
@@ -22,9 +23,14 @@ declare global {
 window.$api = { ...api };
 
 function App() {
-  const { theme } = useAppSelector((store: any) => {
+  const { t, i18n } = useTranslation();
+  const { theme, locale } = useAppSelector((store) => {
     return store.Layout;
   });
+
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [locale]);
   return (
     <ConfigProvider
       theme={{
@@ -32,18 +38,18 @@ function App() {
           theme === "light" ? Theme.defaultAlgorithm : Theme.darkAlgorithm,
         components: {
           Layout: {
-            headerBg: ColorByTheme[theme].headerBg,
-            siderBg: ColorByTheme[theme].siderBg,
-            footerBg: ColorByTheme[theme].footerBg,
-            triggerBg: ColorByTheme[theme].triggerBg,
-            triggerColor: ColorByTheme[theme].triggerColor,
-            triggerHeight: ColorByTheme[theme].triggerHeight,
+            headerBg: ColorByTheme[theme]["headerBg"],
+            siderBg: ColorByTheme[theme]["siderBg"],
+            footerBg: ColorByTheme[theme]["footerBg"],
+            triggerBg: ColorByTheme[theme]["triggerBg"],
+            triggerColor: ColorByTheme[theme]["triggerColor"],
+            triggerHeight: ColorByTheme[theme]["triggerHeight"],
           },
         },
       }}
-      locale={locale}
+      // locale={locale}
     >
-      <HashRouter>
+      <BrowserRouter>
         <AliveScope>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />}></Route>
@@ -61,7 +67,6 @@ function App() {
                       <Suspense fallback={<LoadingComp></LoadingComp>}>
                         <KeepAliveComp {...e}>
                           <e.component />
-                          {/* <LoadingComp></LoadingComp> */}
                         </KeepAliveComp>
                       </Suspense>
                     </e.layout>
@@ -71,7 +76,7 @@ function App() {
             })}
           </Routes>
         </AliveScope>
-      </HashRouter>
+      </BrowserRouter>
     </ConfigProvider>
   );
 }

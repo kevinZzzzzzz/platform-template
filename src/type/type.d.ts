@@ -15,3 +15,19 @@ type GeneratedRoute = {
   };
   children?: GeneratedRoute[];
 };
+
+interface IThemeProperty {
+  [key: string]: string | number | IThemeProperty;
+}
+interface IThemeSetting {
+  locale: "zh" | "en";
+  theme: "light" | "dark";
+  header: IThemeProperty;
+  tab: IThemeProperty;
+  content: IThemeProperty;
+  sider: IThemeProperty;
+  footer: IThemeProperty;
+  tokens: {
+    [key: string]: IThemeProperty;
+  };
+}

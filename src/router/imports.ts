@@ -22,6 +22,9 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   about: lazy(
     () => import(/* webpackChunkName: "about" */ "@/pages/about/index")
   ),
+  login: lazy(
+    () => import(/* webpackChunkName: "login" */ "@/pages/login/index")
+  ),
   "exception.403": lazy(
     () => import(/* webpackChunkName: "403" */ "@/pages/exception/403")
   ),
@@ -31,5 +34,4 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   "exception.500": lazy(
     () => import(/* webpackChunkName: "500" */ "@/pages/exception/500")
   ),
-  login: lazy(() => import(/* webpackChunkName: "login" */ "@/pages/login")),
 };

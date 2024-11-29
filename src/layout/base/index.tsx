@@ -2,24 +2,37 @@ import React, { PureComponent } from "react";
 import styles from "./index.module.scss";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { ConfigProvider, Layout, Menu, Tabs, theme } from "antd";
-import { changeCollapsed } from "@/store/slice/LayoutSlice";
+import { changeActiveTabKey, changeCollapsed } from "@/store/slice/LayoutSlice";
 import "dayjs/locale/zh-cn";
 import locale from "antd/locale/zh_CN";
 import MenuComp from "./components/MenuComp";
+import HeaderComp from "./components/HeaderComp";
+import TabsComp from "./components/TabsComp";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const BaseLayout = ({ children, ...props }) => {
   const dispatch = useAppDispatch();
-  const { theme, collapsed, header, content, tab, sider, footer } =
-    useAppSelector((store: any) => {
-      return store.Layout;
-    });
+  const {
+    theme,
+    collapsed,
+    header,
+    content,
+    tab,
+    sider,
+    footer,
+    headerTabList,
+    activeTabKey,
+  } = useAppSelector((store: any) => {
+    return store.Layout;
+  });
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
         style={sider}
         collapsible
+        breakpoint={sider.breakpoint}
         collapsed={collapsed}
         onCollapse={(value) => dispatch(changeCollapsed({ collapsed: value }))}
       >
@@ -29,15 +42,12 @@ const BaseLayout = ({ children, ...props }) => {
         <MenuComp />
       </Sider>
       <Layout>
-        <Header style={{ ...header }} />
-        <Tabs
-          hideAdd
-          type="editable-card"
-          items={[]}
-          tabBarStyle={{ ...tab }}
-        />
+        <Header style={{ ...header }}>
+          <HeaderComp />
+        </Header>
+        <TabsComp />
         <Content style={{ ...content }}>
-          <div className={styles.main__context}>{children}</div>
+          <div className={styles.main_context}>{children}</div>
         </Content>
         <Footer style={{ ...footer }}></Footer>
       </Layout>

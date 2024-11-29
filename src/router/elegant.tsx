@@ -5,30 +5,6 @@ import {
   ROUTER_NAME_TO_PAGES_MAP,
   VIEW_PREFIX,
 } from "./imports";
-// import KeepAliveComp from "@/components/KeepAliveComp";
-// console.log(KeepAliveComp);
-const KeepAliveComp = (props: any) => {
-  console.log(props, 123123);
-  return <>{props.children}</>;
-  // if (!props.mate?.KeepAlive) {
-  //   return props.children;
-  // }
-  // return (
-  //   <KeepAlive
-  //     cacheKey={props.path}
-  //     key={props.path}
-  //     name={props.path}
-  //     when={() => {
-  //       return props.mate?.keepAlive;
-  //     }}
-  //     autoFreeze={true}
-  //   >
-  //     {/* <AuthRouteComp {...props}> */}
-  //     {props.children}
-  //     {/* </AuthRouteComp> */}
-  //   </KeepAlive>
-  // );
-};
 /**
  * 处理路由组件，根据页面路径获取页面组件
  * @param component 页面路径
@@ -83,15 +59,23 @@ export const handledRoutes = (routesList: GeneratedRoute[]) => {
  *扁平化处理路由
  * @param routerData 路由表
  */
-export function handleFlattenRoutes(routerData: GeneratedRoute[]) {
+export function handleFlattenRoutes(
+  routerData: GeneratedRoute[],
+  fatherIds = []
+) {
   return routerData.reduce((prev, next) => {
-    return prev.concat(
-      next.children && next.children.length
-        ? handleFlattenRoutes(next.children)
-        : {
-            ...next,
-          }
-    );
+    const route = {
+      ...next,
+      fatherId: fatherIds.length > 0 ? [...fatherIds] : null,
+    };
+    prev.push(route);
+    if (route.children && route.children.length > 0) {
+      prev.push(
+        ...handleFlattenRoutes(route.children, [...fatherIds, route.key])
+      );
+    }
+
+    return prev;
   }, []);
 }
 
@@ -110,7 +94,7 @@ export const initMenuList = (data: any, isChild = false) => {
       children:
         e.children && e.children.length ? initMenuList(e.children, true) : null,
       disabled: !e.path && !(e.children && e.children.length),
-      label: e.name,
+      label: e.meta.i18nKey,
       title: e.name,
       type: null,
     };
