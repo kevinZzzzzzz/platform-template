@@ -33,12 +33,15 @@ export const LayoutSlice = createSlice({
     changeLocale(state: any, { payload }) {
       state.locale = payload.locale;
     },
+    // 当前激活的path信息
     changeActivePath(state: any, { payload }) {
       state.activePathInfo = payload.activePathInfo;
     },
+    // 切换tab栏key
     changeActiveTabKey(state: any, { payload }) {
       state.activeTabKey = payload.activeTabKey;
     },
+    // 切换tab栏列表
     changeHeaderTabList(state, { payload }) {
       if (payload.headerTabList) {
         state.headerTabList = payload.headerTabList;
