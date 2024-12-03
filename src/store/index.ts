@@ -5,7 +5,6 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";
 
-// 可持久化
 const persistConfig = {
   key: "root",
   storage: storage,
@@ -15,6 +14,7 @@ const rootReducer = combineReducers({
   Layout: LayoutReducer,
   Base: BaseReducer,
 });
+// 可持久化
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
