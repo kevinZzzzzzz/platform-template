@@ -13,7 +13,7 @@ function KeepAliveComp({ ...props }) {
   return (
     <KeepAlive
       cacheKey={props.path}
-      saveScrollPosition={true}
+      saveScrollPosition="screen"
       key={props.path}
       name={props.path}
       when={() => {
