@@ -70,7 +70,11 @@ const MenuComp: React.FC = (props: any) => {
       if (isInit) {
         // 初始化更新headerTabs
         if (!newHeaderTabList.length) {
-          dispatch(changeHeaderTabList({ headerTabList: [obj] }));
+          dispatch(
+            changeHeaderTabList({
+              headerTabList: [{ ...obj }],
+            })
+          );
         }
         isMounted.current = true;
       } else {
