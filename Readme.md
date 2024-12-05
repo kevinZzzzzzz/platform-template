@@ -76,7 +76,6 @@ xxx
     │  common.ts                       ### 常量定义
     │  type.d.ts                       ### 类型定义
     └─utils                            ### 工具库
-
 ```
 
 ## commit 提交规范
