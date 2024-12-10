@@ -5,5 +5,13 @@
   "403": "403",
   "404": "404",
   "500": "500",
-  "login": "Login"
+  "login": "Login",
+  "table": "Table",
+  "scene": "Scene",
+  "advancedScreening": "AdvancedScreening",
+  "screeningCondition": "ScreeningCondition",
+  "cancelText": "CancelText",
+  "confirmText": "ConfirmText",
+  "selectPlaceholder": "SelectPlaceholder",
+  "inputPlaceholder": "InputPlaceholder"
 }

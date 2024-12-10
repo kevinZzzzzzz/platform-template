@@ -39,6 +39,7 @@ export const ThemeSetting: IThemeSetting = {
   theme: "light",
   header: {
     height: "var(--layout-header-height)",
+    lineHeight: "var(--layout-header-height)",
     padding: "0 10px",
     boxShadow: "10px 1px 2px rgb(0, 21, 41, 0.08)",
   },
@@ -81,5 +82,18 @@ export const ThemeSetting: IThemeSetting = {
         "base-text": "rgb(224, 224, 224)",
       },
     },
+  },
+};
+
+export const AntdStyle: IThemeProperty = {
+  Form: {
+    itemMarginBottom: 12,
+  },
+  Modal: {
+    titleFontSize: 18,
+  },
+  Table: {
+    cellPaddingBlock: 5,
+    cellPaddingInline: 10,
   },
 };

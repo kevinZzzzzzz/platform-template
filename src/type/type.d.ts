@@ -31,3 +31,7 @@ interface IThemeSetting {
     [key: string]: IThemeProperty;
   };
 }
+interface ISelectOption {
+  value: string | number;
+  label: string;
+}

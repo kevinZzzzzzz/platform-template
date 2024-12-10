@@ -150,6 +150,21 @@ export const generatedRoutes: GeneratedRoute[] = [
     ],
   },
   {
+    key: "4",
+    name: "Table",
+    path: "/table",
+    layout: "layout.base",
+    component: "pages.table",
+    meta: {
+      title: "table",
+      i18nKey: "table",
+      icon: "DesktopOutlined",
+      keepAlive: true,
+      order: 1,
+      needShow: true,
+    },
+  },
+  {
     key: "99",
     name: "Login",
     path: "/login",

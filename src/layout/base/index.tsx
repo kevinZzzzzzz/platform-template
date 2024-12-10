@@ -46,9 +46,16 @@ const BaseLayout = ({ children, ...props }) => {
         </Header>
         <TabsComp />
         <Content
-          style={{ ...content, padding: "var(--layout-content-padding)" }}
+          style={{ ...content, padding: "var(--layout-content-out-padding)" }}
         >
-          <div className={styles.context}>{children}</div>
+          <div
+            className={styles.context}
+            style={{
+              backgroundColor: theme === "light" ? "#fff" : "#141414",
+            }}
+          >
+            {children}
+          </div>
         </Content>
         <Footer style={{ ...footer }}></Footer>
       </Layout>

@@ -9,10 +9,13 @@ import { Spin, ConfigProvider, theme as Theme } from "antd";
 import "dayjs/locale/zh-cn";
 // import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { ColorByTheme } from "./constants/theme";
+import { AntdStyle, ColorByTheme } from "./constants/theme";
 import "@/locales/config";
 import { useTranslation, Trans } from "react-i18next";
 import { setupNProgress } from "./router/imports";
+import zhCN from "antd/locale/zh_CN";
+import enUS from "antd/locale/en_US";
+
 setupNProgress();
 declare global {
   interface Window {
@@ -37,6 +40,7 @@ function App() {
   }, [locale]);
   return (
     <ConfigProvider
+      locale={locale === "zh" ? zhCN : enUS}
       theme={{
         algorithm:
           theme === "light" ? Theme.defaultAlgorithm : Theme.darkAlgorithm,
@@ -52,6 +56,7 @@ function App() {
           Tabs: {
             cardBg: ColorByTheme[theme]["tabsCardBg"],
           },
+          ...AntdStyle,
         },
       }}
       // locale={locale}

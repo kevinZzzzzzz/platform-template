@@ -35,6 +35,9 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   "exception.500": lazy(
     () => import(/* webpackChunkName: "500" */ "@/pages/exception/500")
   ),
+  table: lazy(
+    () => import(/* webpackChunkName: "table" */ "@/pages/table/index")
+  ),
 };
 /** Setup plugin NProgress */
 export function setupNProgress() {
