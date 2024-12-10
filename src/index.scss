@@ -84,9 +84,24 @@ ul {
 
 .drawerLayout {
   height: 100%;
+  // overflow: hidden;
   background-color: #f5f6f9;
+  position: relative;
   &_header {
     height: 140px;
     background-color: #fff;
+    margin-bottom: 15px;
+  }
+  &_main {
+    display: grid;
+    height: calc(100% - 170px);
+    grid-template-columns: 1fr 0.3fr;
+    grid-gap: 15px;
+    margin-bottom: 15px;
+    &_left, &_right {
+      background-color: #fff;
+      overflow-y: scroll;
+      // height: 100%;
+    }
   }
 }

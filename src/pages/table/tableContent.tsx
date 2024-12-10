@@ -7,6 +7,7 @@ import {
   PaginationProps,
   Table,
   TableProps,
+  Tabs,
 } from "antd";
 import React, { useState, useEffect, memo } from "react";
 
@@ -182,9 +183,91 @@ function TableContent(props: any) {
   );
 }
 const EditComp = memo((props) => {
+  const lefTabs = [
+    {
+      key: "1",
+      label: "活动",
+      children: "活动",
+    },
+    {
+      key: "2",
+      label: "详细资料",
+      children: "详细资料",
+    },
+    {
+      key: "3",
+      label: "联系人",
+      children: "联系人",
+    },
+    {
+      key: "4",
+      label: "团队成员",
+      children: "团队成员",
+    },
+    {
+      key: "5",
+      label: "商机",
+      children: "商机",
+    },
+    {
+      key: "6",
+      label: "合同",
+      children: "合同",
+    },
+    {
+      key: "7",
+      label: "回款",
+      children: "回款",
+    },
+    {
+      key: "8",
+      label: "回访",
+      children: "回访",
+    },
+    {
+      key: "9",
+      label: "发票",
+      children: "发票",
+    },
+    {
+      key: "10",
+      label: "附件",
+      children: "附件",
+    },
+    {
+      key: "11",
+      label: "操作记录",
+      children: "操作记录",
+    },
+  ];
+  const rightTabs = [
+    {
+      key: "1",
+      label: "重要信息",
+      children: "重要信息",
+    },
+  ];
   return (
     <div className="drawerLayout">
-      <div className="drawerLayout_header">123</div>
+      <div className="drawerLayout_header"></div>
+      <div className="drawerLayout_main">
+        <div className="drawerLayout_main_left">
+          <Tabs
+            type="card"
+            defaultActiveKey="1"
+            size={"small"}
+            items={lefTabs}
+          />
+        </div>
+        <div className="drawerLayout_main_right">
+          <Tabs
+            type="card"
+            defaultActiveKey="1"
+            size={"small"}
+            items={rightTabs}
+          />
+        </div>
+      </div>
     </div>
   );
 });
