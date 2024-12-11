@@ -11,9 +11,12 @@ html::-webkit-scrollbar {
 p {
   margin: 0;
   padding: 0;
+  color: #999;
+  font-size: 12px;
 }
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
+  padding: 0;
 }
 ul {
   padding: 0;
@@ -85,23 +88,76 @@ ul {
 .drawerLayout {
   height: 100%;
   // overflow: hidden;
-  background-color: #f5f6f9;
+  // background-color: #f5f6f9;
   position: relative;
   &_header {
     height: 140px;
-    background-color: #fff;
+    // background-color: #fff;
     margin-bottom: 15px;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 30px 20px 15px;
+    &_main {
+      width: 100%;
+      &_top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &_left {
+          display: flex;
+          &_avatar {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            background-color: #1668dc;
+            margin-right: 15px;
+          }
+          &_info {
+            p {
+              margin-bottom: 5px;
+            }
+            h6 {
+              font-size: 16px;
+            }
+          }
+        }
+        &_right {
+          display: grid;
+          grid-template-columns: 0.5fr 1fr 0.3fr;
+          grid-gap: 15px;
+        }
+      }
+      &_bottom {
+        display: flex;
+        align-items: stretch;
+        padding-top: 8px;
+        &_item {
+          flex: 0 0 10%;
+          h5 {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #000;
+          }
+        }
+      }
+    }
   }
   &_main {
     display: grid;
-    height: calc(100% - 170px);
     grid-template-columns: 1fr 0.3fr;
     grid-gap: 15px;
     margin-bottom: 15px;
+    height: calc(100vh - 170px);
     &_left, &_right {
-      background-color: #fff;
-      overflow-y: scroll;
-      // height: 100%;
+      // background-color: #fff;
+      // overflow-y: auto;
+      border: 1px solid #e6e6e6;
+      height: 100%;
+      overflow: hidden;
+    }
+    .ant-tabs-content-holder {
+      padding: var(--layout-content-out-padding);
+      max-height: calc(100vh - 170px - 32px);
+      overflow: auto;
     }
   }
 }

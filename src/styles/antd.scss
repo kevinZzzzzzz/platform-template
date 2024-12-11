@@ -1,5 +1,6 @@
 
 .ant-table-body {
+  min-height: var(--table-body-height) !important;
   scrollbar-width: auto;
   scrollbar-color: auto;
   &::-webkit-scrollbar {

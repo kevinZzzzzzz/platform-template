@@ -62,26 +62,8 @@ export const ThemeSetting: IThemeSetting = {
     textAlign: "center",
   },
   tokens: {
-    light: {
-      colors: {
-        container: "rgb(255, 255, 255)",
-        layout: "rgb(247, 250, 252)",
-        inverted: "rgb(0, 20, 40)",
-        "base-text": "rgb(31, 31, 31)",
-      },
-      boxShadow: {
-        header: "10 1px 2px rgb(0, 21, 41, 0.08)",
-        sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
-        tab: "0 1px 2px rgb(0, 21, 41, 1)",
-      },
-    },
-    dark: {
-      colors: {
-        container: "rgb(28, 28, 28)",
-        layout: "rgb(18, 18, 18)",
-        "base-text": "rgb(224, 224, 224)",
-      },
-    },
+    light: {},
+    dark: {},
   },
 };
 
@@ -95,5 +77,45 @@ export const AntdStyle: IThemeProperty = {
   Table: {
     cellPaddingBlock: 5,
     cellPaddingInline: 10,
+    cellFontSize: 12,
+  },
+  Tabs: {
+    titleFontSizeSM: 12,
+  },
+  Button: {
+    colorBgSolid: "rgb(76,168,36)",
+    colorBgSolidActive: "rgb(76,168,36, 0.95)",
+    colorBgSolidHover: "rgb(76,168,36, 0.75)",
+  },
+};
+export const AntdTokenStyleMap: IThemeProperty = {
+  light: {
+    colorBgContainer: "rgb(255, 255, 255)",
+    colors: {
+      container: "rgb(255, 255, 255)",
+      layout: "rgb(247, 250, 252)",
+      inverted: "rgb(0, 20, 40)",
+      "base-text": "rgb(31, 31, 31)",
+    },
+    boxShadow: {
+      header: "10 1px 2px rgb(0, 21, 41, 0.08)",
+      sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
+      tab: "0 1px 2px rgb(0, 21, 41, 1)",
+    },
+    bgColorDrawer: "#f5f6f9",
+  },
+  dark: {
+    colorBgContainer: "rgb(28, 28, 28)",
+    colors: {
+      container: "rgb(28, 28, 28)",
+      layout: "rgb(18, 18, 18)",
+      "base-text": "rgb(224, 224, 224)",
+    },
+    boxShadow: {
+      header: "10 1px 2px rgb(0, 21, 41, 0.08)",
+      sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
+      tab: "0 1px 2px rgb(0, 21, 41, 1)",
+    },
+    bgColorDrawer: "rgb(28, 28, 28)",
   },
 };

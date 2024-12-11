@@ -27,7 +27,6 @@ function TableComp(props: any) {
   const headerRef = useRef(null);
   const advancedScreeningRef = useRef(null);
   const { fixTopHeight } = UseFixTop();
-
   return (
     <>
       <div className="fixTopLayout">

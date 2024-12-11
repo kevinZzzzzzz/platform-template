@@ -45,6 +45,7 @@ const MenuComp: React.FC = (props: any) => {
     }
   }, [location]);
   useEffect(() => {
+    console.log(22222);
     setMenuList(MenuInitList);
   }, [props.collapsed]);
 

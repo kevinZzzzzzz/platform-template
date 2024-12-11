@@ -8,20 +8,32 @@ import {
   Table,
   TableProps,
   Tabs,
+  theme,
 } from "antd";
 import React, { useState, useEffect, memo } from "react";
+import ActivityComp from "./components/activityComp";
+import DetailedInfo from "./components/detailedInfo";
+import DrawerHeader from "./components/drawerHeader";
+import ImportantInfo from "./components/importantInfo";
 
 function TableContent(props: any) {
   const [tableData, setTableData] = useState<any[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(500);
   const { tableScrollHeight, fixTopHeight } = UseFixTop();
   const { placement, drawerOpen, showDrawer, onDrawerClose } = UseDraws();
-  const columns: TableProps["columns"] = [
-    {
-      title: "客户名称",
-      dataIndex: "customerName",
+  const [tableColumns, setTableColumns] = useState([]);
+
+  const handleTableColumns = (columns) => {
+    const arrTemp = columns.map((d) => {
+      return {
+        title: d.name,
+        dataIndex: d.fieldName,
+      };
+    });
+    arrTemp[0] = {
+      ...arrTemp[0],
       width: 200,
       fixed: "left",
       render: (text, scope, index) => (
@@ -35,94 +47,15 @@ function TableContent(props: any) {
           {index + 1}
         </Button>
       ),
-    },
-    {
-      title: "客户来源",
-      dataIndex: "customerOrigin",
-    },
-    {
-      title: "手机",
-      dataIndex: "tel",
-    },
-    {
-      title: "电话",
-      dataIndex: "phone",
-    },
-    {
-      title: "网址",
-      dataIndex: "site",
-    },
-    {
-      title: "邮箱",
-      dataIndex: "email",
-    },
-    {
-      title: "客户行业",
-      dataIndex: "customerIndustry",
-    },
-    {
-      title: "客户级别",
-      dataIndex: "customerLevel",
-    },
-    {
-      title: "备注",
-      dataIndex: "remark",
-    },
-    {
-      title: "负责人",
-      dataIndex: "remark0",
-    },
-    {
-      title: "更新时间",
-      dataIndex: "remark9",
-    },
-    {
-      title: "创建人",
-      dataIndex: "remark1",
-    },
-    {
-      title: "电话",
-      dataIndex: "phone1",
-    },
-    {
-      title: "网址",
-      dataIndex: "site1",
-    },
-    {
-      title: "邮箱",
-      dataIndex: "email1",
-    },
-    {
-      title: "客户行业",
-      dataIndex: "customerIndustry1",
-    },
-    {
-      title: "客户级别",
-      dataIndex: "customerLevel1",
-    },
-    {
-      title: "备注",
-      dataIndex: "remark2",
-    },
-    {
-      title: "负责人",
-      dataIndex: "remark3",
-    },
-    {
-      title: "更新时间",
-      dataIndex: "remark4",
-    },
-    {
-      title: "创建人",
-      dataIndex: "remark5",
-    },
-    {
+    };
+    arrTemp.push({
       title: "关注",
       dataIndex: "follow",
       width: 120,
       fixed: "right",
-    },
-  ];
+    });
+    setTableColumns(arrTemp);
+  };
   const rowSelection: TableProps["rowSelection"] = {
     onChange: (selectedRowKeys: React.Key[], selectedRows) => {
       console.log(
@@ -137,13 +70,18 @@ function TableContent(props: any) {
     }),
   };
   useEffect(() => {
+    import("./mock/header.json").then((res) => {
+      handleTableColumns(res.default.data);
+    });
+  }, []);
+  useEffect(() => {
     const obj = {
       customerName: "南京红十字血液中心",
     };
-    const arr = new Array(100).fill(obj);
-    setTotal(arr.length);
+    const arr = new Array(pageSize).fill(obj);
+    // setTotal(arr.length);
     setTableData(arr);
-  }, []);
+  }, [pageSize]);
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
     current,
     pageSize
@@ -155,9 +93,12 @@ function TableContent(props: any) {
   return (
     <>
       <Table
+        style={{
+          "--table-body-height": `${tableScrollHeight - fixTopHeight}px`,
+        }}
         scroll={{ x: 2000, y: `${tableScrollHeight - fixTopHeight}px` }}
         rowSelection={{ type: "checkbox", columnWidth: 48, ...rowSelection }}
-        columns={columns}
+        columns={tableColumns}
         dataSource={tableData}
         pagination={{
           align: "end",
@@ -187,12 +128,12 @@ const EditComp = memo((props) => {
     {
       key: "1",
       label: "活动",
-      children: "活动",
+      children: <ActivityComp />,
     },
     {
       key: "2",
       label: "详细资料",
-      children: "详细资料",
+      children: <DetailedInfo />,
     },
     {
       key: "3",
@@ -244,12 +185,14 @@ const EditComp = memo((props) => {
     {
       key: "1",
       label: "重要信息",
-      children: "重要信息",
+      children: <ImportantInfo />,
     },
   ];
   return (
     <div className="drawerLayout">
-      <div className="drawerLayout_header"></div>
+      <div className="drawerLayout_header">
+        <DrawerHeader />
+      </div>
       <div className="drawerLayout_main">
         <div className="drawerLayout_main_left">
           <Tabs

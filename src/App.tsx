@@ -9,24 +9,32 @@ import { Spin, ConfigProvider, theme as Theme } from "antd";
 import "dayjs/locale/zh-cn";
 // import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { AntdStyle, ColorByTheme } from "./constants/theme";
+import {
+  AntdStyle,
+  AntdTokenStyle,
+  AntdTokenStyleMap,
+  ColorByTheme,
+} from "./constants/theme";
 import "@/locales/config";
 import { useTranslation, Trans } from "react-i18next";
 import { setupNProgress } from "./router/imports";
 import zhCN from "antd/locale/zh_CN";
 import enUS from "antd/locale/en_US";
+import { Bus } from "./utils/Bus";
 
 setupNProgress();
 declare global {
   interface Window {
     $api: any;
     NProgress: any;
+    $busInc: any;
   }
 }
 /* 
   设置全局变量
 */
 window.$api = { ...api };
+window.$busInc = new Bus(); // 事件总线
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -55,9 +63,11 @@ function App() {
           },
           Tabs: {
             cardBg: ColorByTheme[theme]["tabsCardBg"],
+            ...AntdStyle?.Tabs,
           },
           ...AntdStyle,
         },
+        token: AntdTokenStyleMap[theme] as any,
       }}
       // locale={locale}
     >
