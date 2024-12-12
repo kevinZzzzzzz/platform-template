@@ -1,13 +1,34 @@
-import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  HeartOutlined,
+  InfoCircleOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useState, useEffect, memo } from "react";
 
 function DrawerHeader(props: any) {
+  const { tableItemDetail, handleDetail, pageSize } = props;
   function handleEdit() {
     window.$busInc.emit("changeMode", {
-      isEditMode: true,
+      show: true,
+      title: "编辑客户",
+      compName: "EditClient",
     });
   }
+
+  const handleTurnPage = (dict: "prev" | "next") => {
+    if (dict === "prev") {
+      if (tableItemDetail.index > 0) {
+        handleDetail(null, tableItemDetail.index - 1);
+      }
+    } else {
+      if (tableItemDetail.index < pageSize - 1) {
+        handleDetail(null, tableItemDetail.index + 1);
+      }
+    }
+  };
   return (
     <div className="drawerLayout_header_main">
       <div className="drawerLayout_header_main_top">
@@ -15,7 +36,28 @@ function DrawerHeader(props: any) {
           <div className="drawerLayout_header_main_top_left_avatar"></div>
           <div className="drawerLayout_header_main_top_left_info">
             <p>客户</p>
-            <h6>中国输血协会</h6>
+            <h6>{tableItemDetail.customerName}</h6>
+          </div>
+          <div className="drawerLayout_header_main_top_left_operate">
+            <HeartOutlined />
+            <div className="drawerLayout_header_main_top_left_operate_btn">
+              <Button
+                size="small"
+                onClick={() => {
+                  handleTurnPage("prev");
+                }}
+              >
+                <LeftOutlined />
+              </Button>
+              <Button
+                size="small"
+                onClick={() => {
+                  handleTurnPage("next");
+                }}
+              >
+                <RightOutlined />
+              </Button>
+            </div>
           </div>
         </div>
         <div className="drawerLayout_header_main_top_right">

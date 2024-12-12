@@ -14,13 +14,20 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const BaseLayout = ({ children, ...props }) => {
   const dispatch = useAppDispatch();
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState({
+    show: false,
+    title: "",
+    compName: "",
+  });
   useEffect(() => {
     window.$busInc.on("changeMode", (args) => {
-      setIsEditMode(args.isEditMode);
-      setTimeout(() => {
-        window.NProgress?.done();
-      }, 1000);
+      console.log("args", args);
+      setIsEditMode({
+        ...args,
+      });
+      // setTimeout(() => {
+      //   window.NProgress?.done();
+      // }, 1000);
     });
   }, []);
   const {
@@ -37,52 +44,12 @@ const BaseLayout = ({ children, ...props }) => {
     return store.Layout;
   });
   return (
-    <>
-      {/* {isEditMode ? (
-        <EditMode />
-      ) : (
-        <Layout style={{ minHeight: "100vh" }}>
-          <Sider
-            style={sider}
-            collapsible
-            breakpoint={sider.breakpoint}
-            collapsed={collapsed}
-            onCollapse={(value) =>
-              dispatch(changeCollapsed({ collapsed: value }))
-            }
-          >
-            <div className={styles.sider}>
-              <div className={styles.sider_logo}></div>
-            </div>
-            <MenuComp />
-          </Sider>
-          <Layout>
-            <Header style={{ ...header }}>
-              <HeaderComp />
-            </Header>
-            <TabsComp />
-            <Content
-              style={{
-                ...content,
-                padding: "var(--layout-content-out-padding)",
-              }}
-            >
-              <div
-                className={styles.context}
-                style={{
-                  backgroundColor: theme === "light" ? "#fff" : "#141414",
-                }}
-              >
-                {children}
-              </div>
-            </Content>
-            <Footer style={{ ...footer }}></Footer>
-          </Layout>
-        </Layout>
-      )} */}
+    <div className={styles.main}>
       <Layout
+        id="baseLayout"
         style={{
-          minHeight: "100vh",
+          minHeight: isEditMode.show ? "0vh" : "100vh",
+          maxHeight: isEditMode.show ? "0vh" : "100vh",
         }}
       >
         <Sider
@@ -122,9 +89,19 @@ const BaseLayout = ({ children, ...props }) => {
           <Footer style={{ ...footer }}></Footer>
         </Layout>
       </Layout>
-      {/* {isEditMode ? <EditMode /> : null} */}
-      {/* <EditMode style={{ visibility: !isEditMode ? "visible" : "hidden" }} /> */}
-    </>
+      <div
+        style={{
+          minHeight: isEditMode.show ? "100vh" : "0vh",
+          maxHeight: isEditMode.show ? "100vh" : "0vh",
+        }}
+      >
+        <EditMode isEditModeInfo={isEditMode} />
+      </div>
+    </div>
   );
 };
 export default React.memo(BaseLayout);
+
+export const defaultGetContainer = () => {
+  return document.getElementById("baseLayout");
+};

@@ -34,5 +34,14 @@ class Bus implements BusClass {
     fn.push(callback);
     this.list[name] = fn;
   }
+  // 取消监听
+  off(name: string, callback: () => void) {
+    const fn: Array<() => void> = this.list[name] || [];
+    fn.forEach((item: () => void, index: number) => {
+      if (item === callback) {
+        fn.splice(index, 1);
+      }
+    });
+  }
 }
 export { Bus };

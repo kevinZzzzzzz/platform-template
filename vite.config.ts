@@ -1,19 +1,27 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 // https://vitejs.dev/config/
-export default ({mode, command}) => {
-  const env= loadEnv(mode, process.cwd());   // 获取.env文件里定义的环境变量
+export default ({ mode, command }) => {
+  const env = loadEnv(mode, process.cwd()); // 获取.env文件里定义的环境变量
   return defineConfig({
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src')
-      }
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
     define: {
-      'process.env': process.env
+      "process.env": process.env,
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern-compiler", // or "modern", "legacy"
+          // additionalData: `@import "@/assets/styles/global.scss";`,
+        },
+      },
     },
     server: {
       port: 8881,
@@ -24,11 +32,11 @@ export default ({mode, command}) => {
           changeOrigin: true,
           secure: false, // 解决代理https协议报错问题
           headers: {
-            'Access-Control-Allow-Origin': '*'
+            "Access-Control-Allow-Origin": "*",
           },
           rewrite: (path: any) => path.replace(/^\/api/, ""),
         },
-      }
-    }
-  })
-}
+      },
+    },
+  });
+};

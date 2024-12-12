@@ -6,8 +6,8 @@
 }
 .context {
   min-height: 100%;
+  max-height: 100%;
   padding: var(--layout-content-inner-padding);
-  // background-color: #fff;
 }
 .sider {
   height: var(--layout-header-height);

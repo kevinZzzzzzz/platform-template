@@ -27,32 +27,61 @@ function TableComp(props: any) {
   const headerRef = useRef(null);
   const advancedScreeningRef = useRef(null);
   const { fixTopHeight } = UseFixTop();
+  const [isSelectMode, setIsSelectMode] = useState({
+    show: false,
+    data: [],
+  });
+
+  useEffect(() => {
+    window.$busInc.on("handleTableSelect", (args) => {
+      setIsSelectMode({
+        show: !!(args.data && args.data.length),
+        data: args.data,
+      });
+    });
+    return () => {
+      window.$busInc.off("handleTableSelect", (args) => {
+        setIsSelectMode({
+          show: !!(args.data && args.data.length),
+          data: args.data,
+        });
+      });
+    };
+  }, []);
   return (
     <>
       <div className="fixTopLayout">
         <div ref={headerRef} className="fixTopHeader">
-          <Form name="basic" layout="inline" autoComplete="off">
-            <Form.Item<FieldType> label={t("scene")} name="scene">
-              <Select
-                allowClear
-                style={{ width: 200 }}
-                defaultValue={"0"}
-                placeholder={t("selectPlaceholder")}
-                options={[...scaleOption]}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                icon={<FilterOutlined />}
-                onClick={() => {
-                  showModal();
-                }}
-              >
-                {t("advancedScreening")}
-              </Button>
-            </Form.Item>
-          </Form>
+          {isSelectMode.show ? (
+            <div className="fixTopHeader_main">
+              <p>
+                已选中 <strong>{isSelectMode.data?.length || 0}</strong> 项
+              </p>
+            </div>
+          ) : (
+            <Form name="basic" layout="inline" autoComplete="off">
+              <Form.Item<FieldType> label={t("scene")} name="scene">
+                <Select
+                  allowClear
+                  style={{ width: 200 }}
+                  defaultValue={"0"}
+                  placeholder={t("selectPlaceholder")}
+                  options={[...scaleOption]}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  icon={<FilterOutlined />}
+                  onClick={() => {
+                    showModal();
+                  }}
+                >
+                  {t("advancedScreening")}
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
         </div>
         <div
           className="fixTopLayout_child"

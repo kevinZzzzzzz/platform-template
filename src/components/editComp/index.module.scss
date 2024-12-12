@@ -1,0 +1,23 @@
+.EditClient {
+  width: 100%;
+  &_header {
+    padding: 5px 15px;
+    h5 {
+      font-size: 14px;
+      color: var(--font-color-default);
+      font-weight: 600;
+      position: relative;
+    }
+    h5::before {
+      content: '';
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+      background-color: #1668dc;
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      transform: translateY(-50%);
+    }
+  }
+}

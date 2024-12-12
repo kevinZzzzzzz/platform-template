@@ -58,8 +58,12 @@ export const ThemeSetting: IThemeSetting = {
     breakpoint: "md",
   },
   footer: {
-    height: "var(--layout-footer-height))",
-    textAlign: "center",
+    minHeight: "var(--layout-footer-height)",
+    maxHeight: "var(--layout-footer-height)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "var(--layout-footer-padding)",
   },
   tokens: {
     light: {},
@@ -78,6 +82,7 @@ export const AntdStyle: IThemeProperty = {
     cellPaddingBlock: 5,
     cellPaddingInline: 10,
     cellFontSize: 12,
+    rowHoverBg: "rgb(0 146 255 / 11%)",
   },
   Tabs: {
     titleFontSizeSM: 12,

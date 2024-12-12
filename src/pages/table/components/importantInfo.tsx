@@ -6,6 +6,14 @@ import { InfoDetailData } from "../mock";
 
 function ImportantInfo(props: any) {
   const [infoDetail, setInfoDetail] = useState([]);
+
+  function handleEdit() {
+    window.$busInc.emit("changeMode", {
+      show: true,
+      title: "新建联系人",
+      compName: "EditClient",
+    });
+  }
   useEffect(() => {
     setInfoDetail(() => {
       return InfoDetailData?.reduce((pre, next) => {
@@ -19,7 +27,13 @@ function ImportantInfo(props: any) {
         <p className={styles.ImportantInfo_blockTop_emptyText}>
           暂无客户首要联系人
         </p>
-        <Button type="primary" icon={<PlusOutlined />}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => {
+            handleEdit();
+          }}
+        >
           新建联系人
         </Button>
       </div>

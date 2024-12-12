@@ -21,6 +21,7 @@ import { setupNProgress } from "./router/imports";
 import zhCN from "antd/locale/zh_CN";
 import enUS from "antd/locale/en_US";
 import { Bus } from "./utils/Bus";
+// import { Bus } from "js-tools-xxx";
 
 setupNProgress();
 declare global {

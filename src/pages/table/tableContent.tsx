@@ -1,5 +1,7 @@
 import UseDraws from "@/hooks/useDraw";
 import UseFixTop from "@/hooks/useFixTop";
+import { defaultGetContainer } from "@/layout/base";
+import { HeartOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
@@ -10,8 +12,9 @@ import {
   Tabs,
   theme,
 } from "antd";
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useRef } from "react";
 import ActivityComp from "./components/activityComp";
+import ContactPerson from "./components/contactPerson";
 import DetailedInfo from "./components/detailedInfo";
 import DrawerHeader from "./components/drawerHeader";
 import ImportantInfo from "./components/importantInfo";
@@ -24,12 +27,14 @@ function TableContent(props: any) {
   const { tableScrollHeight, fixTopHeight } = UseFixTop();
   const { placement, drawerOpen, showDrawer, onDrawerClose } = UseDraws();
   const [tableColumns, setTableColumns] = useState([]);
+  const [tableItemDetail, setTableItemDetail] = useState({});
 
   const handleTableColumns = (columns) => {
-    const arrTemp = columns.map((d) => {
+    const arrTemp = columns.map((d, idx) => {
       return {
         title: d.name,
         dataIndex: d.fieldName,
+        idx: idx,
       };
     });
     arrTemp[0] = {
@@ -40,11 +45,10 @@ function TableContent(props: any) {
         <Button
           type="link"
           onClick={() => {
-            showDrawer();
+            handleDetail(scope, index);
           }}
         >
           {text}
-          {index + 1}
         </Button>
       ),
     };
@@ -53,21 +57,23 @@ function TableContent(props: any) {
       dataIndex: "follow",
       width: 120,
       fixed: "right",
+      render: () => <HeartOutlined />,
     });
     setTableColumns(arrTemp);
   };
   const rowSelection: TableProps["rowSelection"] = {
     onChange: (selectedRowKeys: React.Key[], selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+      console.log(selectedRowKeys, selectedRows);
+      window.$busInc.emit("handleTableSelect", {
+        data: selectedRows,
+      });
     },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User", // Column configuration not to be checked
-      name: record.name,
-    }),
+  };
+
+  const handleDetail = (scope, index) => {
+    const detail = scope || tableData[index];
+    scope && showDrawer();
+    setTableItemDetail({ ...detail, index });
   };
   useEffect(() => {
     import("./mock/header.json").then((res) => {
@@ -78,9 +84,14 @@ function TableContent(props: any) {
     const obj = {
       customerName: "南京红十字血液中心",
     };
-    const arr = new Array(pageSize).fill(obj);
+    const arr = new Array(pageSize).fill(obj).map((d, idx) => {
+      return {
+        customerName: `${d.customerName}${idx + 1}`,
+        index: idx,
+      };
+    });
     // setTotal(arr.length);
-    setTableData(arr);
+    setTableData(() => arr);
   }, [pageSize]);
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
     current,
@@ -100,6 +111,9 @@ function TableContent(props: any) {
         rowSelection={{ type: "checkbox", columnWidth: 48, ...rowSelection }}
         columns={tableColumns}
         dataSource={tableData}
+        rowKey={(recode) => {
+          return recode.index;
+        }}
         pagination={{
           align: "end",
           current: pageNum,
@@ -117,13 +131,19 @@ function TableContent(props: any) {
         open={drawerOpen}
         onClose={onDrawerClose}
         key={placement}
+        destroyOnClose={true}
       >
-        <EditComp />
+        <EditComp
+          tableItemDetail={tableItemDetail}
+          handleDetail={handleDetail}
+          pageSize={pageSize}
+        />
       </Drawer>
     </>
   );
 }
-const EditComp = memo((props) => {
+const EditComp = memo((props: any) => {
+  const { tableItemDetail, handleDetail, pageSize } = props;
   const lefTabs = [
     {
       key: "1",
@@ -138,7 +158,7 @@ const EditComp = memo((props) => {
     {
       key: "3",
       label: "联系人",
-      children: "联系人",
+      children: <ContactPerson />,
     },
     {
       key: "4",
@@ -191,7 +211,11 @@ const EditComp = memo((props) => {
   return (
     <div className="drawerLayout">
       <div className="drawerLayout_header">
-        <DrawerHeader />
+        <DrawerHeader
+          tableItemDetail={tableItemDetail}
+          handleDetail={handleDetail}
+          pageSize={pageSize}
+        />
       </div>
       <div className="drawerLayout_main">
         <div className="drawerLayout_main_left">

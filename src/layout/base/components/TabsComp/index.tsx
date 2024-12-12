@@ -224,7 +224,7 @@ function TabsComp(props: any) {
   const MenuContext = () => (
     <div
       className={styles.tabs}
-      style={{ top: showMenu.top, left: showMenu.left }}
+      style={{ top: showMenu.top, left: showMenu.left, zIndex: 999 }}
     >
       {items.map((d: any, idx) => {
         return <span key={idx}>{d.label}</span>;
@@ -273,6 +273,7 @@ function TabsComp(props: any) {
             ...d,
             label: (
               <div
+                key={idx}
                 className={styles.customLabel}
                 onContextMenu={(e) => {
                   e.preventDefault();
