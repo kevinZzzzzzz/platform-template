@@ -12,6 +12,7 @@ type GeneratedRoute = {
     keepAlive?: boolean;
     roles?: string[];
     needShow: boolean;
+    menuKey?: string;
   };
   children?: GeneratedRoute[];
 };

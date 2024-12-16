@@ -95,6 +95,7 @@ export const initMenuList = (data: any, isChild = false) => {
         e.children && e.children.length ? initMenuList(e.children, true) : null,
       disabled: !e.path && !(e.children && e.children.length),
       label: e.meta.i18nKey,
+      menukey: e.meta.menuKey,
       title: e.name,
       type: null,
     };

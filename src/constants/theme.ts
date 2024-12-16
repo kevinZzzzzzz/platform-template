@@ -1,9 +1,9 @@
 export const ColorByTheme: IThemeProperty = {
   light: {
     headerBg: "rgb(255, 255, 255)",
-    siderBg: "rgb(255, 255, 255)",
-    triggerBg: "rgb(255, 255, 255)",
-    triggerColor: "rgb(0,0,0)",
+    siderBg: "#001529",
+    triggerBg: "#002140",
+    triggerColor: "#fff",
     footerBg: "rgb(255, 255, 255)",
     triggerHeight: 48,
     tabsCardBg: "rgba(0, 0, 0, 0.04)",
@@ -51,7 +51,7 @@ export const ThemeSetting: IThemeSetting = {
   content: {
     height:
       "calc(100vh - var(--layout-header-height) - var(--layout-tab-height) - var(--layout-footer-height))",
-    overflowY: "scroll",
+    overflowY: "hidden",
   },
   sider: {
     width: "220px",
@@ -79,13 +79,32 @@ export const AntdStyle: IThemeProperty = {
     titleFontSize: 18,
   },
   Table: {
-    cellPaddingBlock: 5,
+    cellPaddingBlock: 10,
     cellPaddingInline: 10,
     cellFontSize: 12,
-    rowHoverBg: "rgb(0 146 255 / 11%)",
+    rowHoverBg: "#9ad6ff",
   },
   Tabs: {
     titleFontSizeSM: 12,
+  },
+  Menu: {
+    light: {
+      itemBg: "#001529",
+      popupBg: "#001529",
+      itemColor: "#bebec0",
+      itemHoverBg: "#ffffff1a",
+      itemHoverColor: "#bebec0",
+      itemSelectedBg: "#1677ff",
+      itemSelectedColor: "#fff",
+    },
+    dart: {
+      itemBg: "#41464b",
+      itemColor: "#bebec0",
+      itemHoverBg: "#ffffff1a",
+      itemHoverColor: "#bebec0",
+      itemSelectedBg: "#a7b4c6",
+      itemSelectedColor: "#fff",
+    },
   },
   Button: {
     colorBgSolid: "rgb(76,168,36)",

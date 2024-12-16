@@ -7,8 +7,8 @@ const AllRouters: GeneratedRoute[] = handledRoutes(generatedRoutes);
 const flattenRoutes: GeneratedRoute[] = handleFlattenRoutes(AllRouters);
 
 // 初始化菜单列表
-const MenuInitList: GeneratedRoute[] = initMenuList(generatedRoutes);
+const MenuInitList = initMenuList(generatedRoutes);
 // 扁平化菜单列表
-const flattenMenuList: GeneratedRoute[] = handleFlattenRoutes(MenuInitList);
+const flattenMenuList = handleFlattenRoutes(MenuInitList);
 
 export { AllRouters, flattenRoutes, MenuInitList, flattenMenuList };

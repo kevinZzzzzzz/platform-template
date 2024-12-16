@@ -15,6 +15,7 @@ import {
   // changeActivePath,
   changeActiveTabKey,
   changeHeaderTabList,
+  changeMenuKey,
 } from "@/store/slice/LayoutSlice";
 interface LevelKeysProps {
   key?: string;
@@ -22,7 +23,7 @@ interface LevelKeysProps {
 }
 
 const MenuComp: React.FC = (props: any) => {
-  const { headerTabList } = useAppSelector((store: any) => {
+  const { headerTabList, menuKey } = useAppSelector((store: any) => {
     return store.Layout;
   });
   const navigate = useNavigate();
@@ -45,8 +46,8 @@ const MenuComp: React.FC = (props: any) => {
     }
   }, [location]);
   useEffect(() => {
-    setMenuList(MenuInitList);
-  }, [props.collapsed]);
+    setMenuList(MenuInitList.filter((d) => d.menukey === menuKey));
+  }, [props.collapsed, menuKey]);
 
   /**
    * 初始化或者切换路由时, 保存menu组件的父子级菜单的激活状态
@@ -66,6 +67,7 @@ const MenuComp: React.FC = (props: any) => {
         label: t(activeItem.label || activeItem.name),
         key: activeItem.key,
         path: activeItem.path,
+        menuKey: activeItem.menukey,
       };
       const newHeaderTabList = JSON.parse(JSON.stringify(headerTabList));
       if (isInit) {
@@ -76,6 +78,7 @@ const MenuComp: React.FC = (props: any) => {
               headerTabList: [{ ...obj }],
             })
           );
+          dispatch(changeMenuKey({ menuKey: obj.menuKey }));
         }
         isMounted.current = true;
       } else {
@@ -86,15 +89,18 @@ const MenuComp: React.FC = (props: any) => {
             label: obj.label,
             key: obj.key,
             path: obj.path,
+            menuKey: obj.menuKey,
           };
           newHeaderTabList.push(item);
           // 更新headerTab组件的数据
           dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
           dispatch(changeActiveTabKey({ activeTabKey: item.key }));
+          dispatch(changeMenuKey({ menuKey: obj.menuKey }));
         }
       }
       // 每次路由跳转都要更新tabs激活状态
       dispatch(changeActiveTabKey({ activeTabKey: obj.key }));
+      dispatch(changeMenuKey({ menuKey: obj.menuKey }));
     }
   }
   const onClick: MenuProps["onClick"] = (e: any) => {

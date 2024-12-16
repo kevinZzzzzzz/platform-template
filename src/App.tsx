@@ -62,11 +62,12 @@ function App() {
             triggerColor: ColorByTheme[theme]["triggerColor"],
             triggerHeight: ColorByTheme[theme]["triggerHeight"],
           },
+          ...AntdStyle,
           Tabs: {
             cardBg: ColorByTheme[theme]["tabsCardBg"],
             ...AntdStyle?.Tabs,
           },
-          ...AntdStyle,
+          Menu: AntdStyle?.Menu[theme],
         },
         token: AntdTokenStyleMap[theme] as any,
       }}

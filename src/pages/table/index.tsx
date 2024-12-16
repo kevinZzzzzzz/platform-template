@@ -83,10 +83,7 @@ function TableComp(props: any) {
             </Form>
           )}
         </div>
-        <div
-          className="fixTopLayout_child"
-          style={{ height: `calc(100% - ${fixTopHeight}px - 24px)` }}
-        >
+        <div className="fixTopLayout_child">
           <TableContent />
         </div>
         <Modal

@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   changeActiveTabKey,
   changeHeaderTabList,
+  changeMenuKey,
 } from "@/store/slice/LayoutSlice";
 import { Dropdown, Menu, Tabs, TabsProps } from "antd";
 import React, { useState, useEffect, memo, useRef } from "react";
@@ -115,6 +116,7 @@ function TabsComp(props: any) {
     const obj = headerTabList.find((a: any) => a.key == act);
     if (obj) {
       dispatch(changeActiveTabKey({ activeTabkey: obj.key }));
+      dispatch(changeMenuKey({ menuKey: obj.menuKey }));
       navigate(obj.path);
     }
   };
@@ -130,6 +132,7 @@ function TabsComp(props: any) {
 
     let newActkey = ""; // 新选中tab的key
     let newActPath = ""; // 新选中tab的path
+    let newMenuKey = ""; // 顶部tabs选中key
     let delObj: any = {}; // 关掉的tab对象信息
     if (delId == activeTabKey) {
       // 关闭的tab为当前激活的tab
@@ -137,15 +140,18 @@ function TabsComp(props: any) {
         // tab在第一位的情况,关闭后激活状态和路由完后一个tab过度
         newActkey = newHeaderTabList[delIndex + 1].key;
         newActPath = newHeaderTabList[delIndex + 1].path;
+        newMenuKey = newHeaderTabList[delIndex + 1].menuKey;
         delObj = newHeaderTabList.splice(0, 1);
       } else {
         // tab不在第一位的情况,关闭后激活状态和路由完前一个tab过度
         newActkey = newHeaderTabList[delIndex - 1].key;
         newActPath = newHeaderTabList[delIndex - 1].path;
+        newMenuKey = newHeaderTabList[delIndex - 1].menuKey;
         delObj = newHeaderTabList.splice(delIndex, 1);
       }
       // 更新激活的tabKey
       dispatch(changeActiveTabKey({ activeTabKey: newActkey }));
+      dispatch(changeMenuKey({ menuKey: newMenuKey }));
     } else {
       delObj = newHeaderTabList.splice(delIndex, 1);
       newActPath = "";
@@ -164,6 +170,7 @@ function TabsComp(props: any) {
     let newHeaderTabList = JSON.parse(JSON.stringify(headerTabList));
     let newActkey = "";
     let newActPath = "";
+    let newMenuKey = "";
 
     setShowMenu((pre) => {
       return {
@@ -179,33 +186,39 @@ function TabsComp(props: any) {
       case "other":
         newActkey = newHeaderTabList[index].key;
         newActPath = newHeaderTabList[index].path;
+        newMenuKey = newHeaderTabList[index].menuKey;
         newHeaderTabList = newHeaderTabList.filter(
           (d, idx) => !+d.key || idx == index
         );
         // 更新激活的tabKey
         dispatch(changeActiveTabKey({ activeTabKey: newActkey }));
+        dispatch(changeMenuKey({ menuKey: newMenuKey }));
         dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
         newActPath && navigate(newActPath);
         break;
       case "left":
         newActkey = newHeaderTabList[index].key;
         newActPath = newHeaderTabList[index].path;
+        newMenuKey = newHeaderTabList[index].menuKey;
         newHeaderTabList = newHeaderTabList.filter(
           (d, idx) => !+d.key || idx >= index
         );
         // 更新激活的tabKey
         dispatch(changeActiveTabKey({ activeTabKey: newActkey }));
+        dispatch(changeMenuKey({ menuKey: newMenuKey }));
         dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
         newActPath && navigate(newActPath);
         break;
       case "right":
         newActkey = newHeaderTabList[index].key;
         newActPath = newHeaderTabList[index].path;
+        newMenuKey = newHeaderTabList[index].menuKey;
         newHeaderTabList = newHeaderTabList.filter(
           (d, idx) => !+d.key || idx <= index
         );
         // 更新激活的tabKey
         dispatch(changeActiveTabKey({ activeTabKey: newActkey }));
+        dispatch(changeMenuKey({ menuKey: newMenuKey }));
         dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
         newActPath && navigate(newActPath);
         break;
@@ -213,6 +226,7 @@ function TabsComp(props: any) {
         newHeaderTabList = newHeaderTabList.filter((d, idx) => !+d.key);
         // 更新激活的tabKey
         dispatch(changeActiveTabKey({ activeTabKey: "0" }));
+        dispatch(changeMenuKey({ menuKey: "1" }));
         dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
         navigate("/home");
         break;

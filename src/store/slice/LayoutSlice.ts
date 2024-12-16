@@ -13,6 +13,7 @@ export const LayoutSlice = createSlice({
     ], // 顶部tab栏
     activeTabKey: "1", // 当前激活的页面key
     activePathInfo: {}, // 当前激活的页面信息
+    menuKey: "1", // 顶部菜单Key
   },
   reducers: {
     // 张开闭合sider
@@ -53,6 +54,10 @@ export const LayoutSlice = createSlice({
         state.headerTabList = payload.headerTabList;
       }
     },
+    // 切换一级菜单
+    changeMenuKey(state, { payload }) {
+      state.menuKey = payload.menuKey;
+    },
   },
 });
 
@@ -64,5 +69,6 @@ export const {
   changeActivePath,
   changeActiveTabKey,
   changeHeaderTabList,
+  changeMenuKey,
 } = LayoutSlice.actions;
 export default LayoutSlice.reducer;

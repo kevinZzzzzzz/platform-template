@@ -11,6 +11,7 @@ import {
   TableProps,
   Tabs,
   theme,
+  Tooltip,
 } from "antd";
 import React, { useState, useEffect, memo, useRef } from "react";
 import ActivityComp from "./components/activityComp";
@@ -23,7 +24,7 @@ function TableContent(props: any) {
   const [tableData, setTableData] = useState<any[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(500);
+  const [total, setTotal] = useState(0);
   const { tableScrollHeight, fixTopHeight } = UseFixTop();
   const { placement, drawerOpen, showDrawer, onDrawerClose } = UseDraws();
   const [tableColumns, setTableColumns] = useState([]);
@@ -31,27 +32,55 @@ function TableContent(props: any) {
 
   const handleTableColumns = (columns) => {
     const arrTemp = columns.map((d, idx) => {
-      return {
-        title: d.name,
-        dataIndex: d.fieldName,
-        idx: idx,
-      };
+      if (!idx) {
+        return {
+          title: d.name,
+          dataIndex: d.fieldName,
+          idx: idx,
+          width: 200,
+          fixed: "left",
+          ellipsis: {
+            showTitle: false,
+          },
+          sorter: (a, b) => a[d.fieldName] - b[d.fieldName],
+          render: (text, scope, index) => (
+            <Button
+              type="link"
+              onClick={() => {
+                handleDetail(scope, index);
+              }}
+            >
+              {text?.length > 15 ? (
+                <Tooltip placement="topLeft" title={text}>
+                  {text?.slice(0, 10) + "..."}
+                </Tooltip>
+              ) : (
+                <span>{text}</span>
+              )}
+            </Button>
+          ),
+        };
+      } else {
+        return {
+          title: d.name,
+          dataIndex: d.fieldName,
+          idx: idx,
+          width: 100,
+          sorter: (a, b) => a[d.fieldName] - b[d.fieldName],
+          ellipsis: {
+            showTitle: false,
+          },
+          render: (text) =>
+            text?.length > 10 ? (
+              <Tooltip placement="topLeft" title={text}>
+                {text}
+              </Tooltip>
+            ) : (
+              <span>{text}</span>
+            ),
+        };
+      }
     });
-    arrTemp[0] = {
-      ...arrTemp[0],
-      width: 200,
-      fixed: "left",
-      render: (text, scope, index) => (
-        <Button
-          type="link"
-          onClick={() => {
-            handleDetail(scope, index);
-          }}
-        >
-          {text}
-        </Button>
-      ),
-    };
     arrTemp.push({
       title: "关注",
       dataIndex: "follow",
@@ -63,7 +92,6 @@ function TableContent(props: any) {
   };
   const rowSelection: TableProps["rowSelection"] = {
     onChange: (selectedRowKeys: React.Key[], selectedRows) => {
-      console.log(selectedRowKeys, selectedRows);
       window.$busInc.emit("handleTableSelect", {
         data: selectedRows,
       });
@@ -81,33 +109,44 @@ function TableContent(props: any) {
     });
   }, []);
   useEffect(() => {
-    const obj = {
-      customerName: "南京红十字血液中心",
-    };
-    const arr = new Array(pageSize).fill(obj).map((d, idx) => {
-      return {
-        customerName: `${d.customerName}${idx + 1}`,
-        index: idx,
-      };
+    import("./mock/data.json").then((res: any) => {
+      console.log(res.default.data, "res");
+      const arr = res.default.data.map((d, idx) => {
+        return {
+          ...d,
+          index: idx,
+        };
+      });
+      setTableData(() => arr);
+      setTotal(arr.length);
     });
-    // setTotal(arr.length);
-    setTableData(() => arr);
-  }, [pageSize]);
+  }, []);
+
+  // pageSize 变化的回调
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
     current,
     pageSize
   ) => {
-    setPageNum(current);
     setPageSize(pageSize);
   };
+  // 切换页码
+  const onChangePageNum: PaginationProps["onChange"] = (pageNumber) => {
+    setPageNum(pageNumber);
+  };
+  const showTotal: PaginationProps["showTotal"] = (total) => `总共 ${total} 条`;
 
   return (
     <>
       <Table
         style={{
-          "--table-body-height": `${tableScrollHeight - fixTopHeight}px`,
+          "--table-body-height": `${
+            tableScrollHeight - fixTopHeight - 43 - 48
+          }px`,
         }}
-        scroll={{ x: 2000, y: `${tableScrollHeight - fixTopHeight}px` }}
+        scroll={{
+          x: 2000,
+          y: `${tableScrollHeight - fixTopHeight - 43 - 48}px `,
+        }}
         rowSelection={{ type: "checkbox", columnWidth: 48, ...rowSelection }}
         columns={tableColumns}
         dataSource={tableData}
@@ -119,9 +158,12 @@ function TableContent(props: any) {
           current: pageNum,
           pageSize: pageSize,
           total: total,
+          showTotal: showTotal,
+          showQuickJumper: true,
           showSizeChanger: true,
           pageSizeOptions: [10, 20, 50, 100],
           onShowSizeChange: onShowSizeChange,
+          onChange: onChangePageNum,
         }}
       />
       <Drawer

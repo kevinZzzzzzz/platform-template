@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import styles from "./index.module.scss";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
@@ -16,14 +16,27 @@ import {
   changeFullScreen,
   changeLocale,
   changeTheme,
+  changeMenuKey,
 } from "@/store/slice/LayoutSlice";
-import { Avatar, Button, Dropdown, MenuProps, Space, Tooltip } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  MenuProps,
+  Space,
+  Tabs,
+  Tooltip,
+} from "antd";
 import { LocaleList } from "@/constants/theme";
+import { HEADER_MENU_TABS } from "@/router/imports";
+import IconComp from "../Icon";
 function HeaderComp(props: any) {
   const dispatch = useAppDispatch();
-  const { theme, fullScreen, locale } = useAppSelector((store: any) => {
-    return store.Layout;
-  });
+  const { theme, fullScreen, locale, menuKey } = useAppSelector(
+    (store: any) => {
+      return store.Layout;
+    }
+  );
   const LangItems: MenuProps["items"] = LocaleList.map((d) => {
     return {
       label: (
@@ -66,9 +79,32 @@ function HeaderComp(props: any) {
   const setTheme = () => {
     dispatch(changeTheme({ theme: theme === "dark" ? "light" : "dark" }));
   };
+  /** 顶部菜单 */
+  const headerTabsItem = useMemo(() => {
+    return HEADER_MENU_TABS.map((d, idx) => {
+      return {
+        label: d.title,
+        icon: IconComp(d.icon),
+        key: d.key,
+        path: d.path,
+      };
+    });
+  }, []);
+
+  // 切换tabs
+  const handleTabClick = (e: string) => {
+    dispatch(changeMenuKey({ menuKey: e }));
+  };
   return (
     <div className={styles.HeaderComp}>
-      <div className={styles.HeaderComp_leftCtx}></div>
+      <div className={styles.HeaderComp_leftCtx}>
+        <Tabs
+          defaultActiveKey={menuKey}
+          activeKey={menuKey}
+          items={headerTabsItem}
+          onTabClick={handleTabClick}
+        />
+      </div>
       <div className={styles.HeaderComp_rightCtx}>
         <div className={styles.HeaderComp_rightCtx_item}>
           <Tooltip placement="bottom" title={"搜索"}>

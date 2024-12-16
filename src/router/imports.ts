@@ -15,6 +15,24 @@ export const LAYOUT_NAME_MAP = {
   base: BaseLayout,
   blank: BlankLayout,
 };
+
+/**
+ * 顶部菜单Tabs 列表
+ */
+export const HEADER_MENU_TABS = [
+  {
+    key: "1",
+    title: "菜单一",
+    path: "/home",
+    icon: "BarChartOutlined",
+  },
+  {
+    key: "2",
+    title: "菜单二",
+    path: "/home2",
+    icon: "LineChartOutlined",
+  },
+];
 /**
  * 页面路径映射
  */

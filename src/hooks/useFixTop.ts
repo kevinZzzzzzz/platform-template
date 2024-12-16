@@ -24,7 +24,7 @@ function UseFixTop() {
     const layoutFooterHeight = handleStylePropertyValue(
       "--layout-footer-height"
     );
-    const tableTabHeight = handleStylePropertyValue("--layout-tab-height");
+    const layoutTabHeight = handleStylePropertyValue("--layout-tab-height");
     const layoutContentOutPadding = handleStylePropertyValue(
       "--layout-content-out-padding"
     );
@@ -36,20 +36,20 @@ function UseFixTop() {
       pcInnerHeight -
       layoutHeaderHeight -
       layoutFooterHeight -
-      tableTabHeight -
+      layoutTabHeight -
       layoutContentOutPadding * 2 -
       layoutContentInnerPadding * 2;
-
-    // 剩余空间 -  表格头部高度 - 表格底部高度
-    setTableScrollHeight(targetHeight - 64 - 34);
+    // 剩余空间 - 表格头部高度 - 表格底部高度
+    setTableScrollHeight(targetHeight);
   };
   useLayoutEffect(() => {
     const timer = setTimeout(() => {
       const fixTopHeaderRef =
         document.getElementsByClassName("fixTopHeader")[0];
-      setFixTopHeight(
-        +window.getComputedStyle(fixTopHeaderRef).height.replace("px", "")
-      );
+      const fixTopHeaderH = +window
+        .getComputedStyle(fixTopHeaderRef)
+        .height.replace("px", "");
+      setFixTopHeight(fixTopHeaderH);
       computeTableScrollHeight();
     }, 0);
     window.addEventListener("resize", () => {
