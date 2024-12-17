@@ -56,6 +56,13 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   table: lazy(
     () => import(/* webpackChunkName: "table" */ "@/pages/table/index")
   ),
+  form: lazy(() => import(/* webpackChunkName: "form" */ "@/pages/form/index")),
+  coldChainWeb: lazy(
+    () =>
+      import(
+        /* webpackChunkName: "coldChainWeb" */ "@/pages/coldChainWeb/index"
+      )
+  ),
 };
 /** Setup plugin NProgress */
 export function setupNProgress() {

@@ -13,6 +13,7 @@ package-lock.json
 .eslintrc-auto-import.json
 auto-import.d.ts
 
+/public/coldChainWeb
 # misc
 .DS_Store
 .env.local

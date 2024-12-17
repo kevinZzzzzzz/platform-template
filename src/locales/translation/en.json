@@ -16,5 +16,7 @@
   "cancelText": "CancelText",
   "confirmText": "ConfirmText",
   "selectPlaceholder": "SelectPlaceholder",
-  "inputPlaceholder": "InputPlaceholder"
+  "inputPlaceholder": "InputPlaceholder",
+  "form": "Form",
+  "coldChainWeb": "ColdChainWeb"
 }

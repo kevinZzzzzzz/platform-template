@@ -9,6 +9,8 @@
   max-height: 100%;
   padding: var(--layout-content-inner-padding);
   overflow-y: scroll;
+  box-shadow: 0px 10px 12px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
 }
 .context::-webkit-scrollbar {
   display: none;
@@ -21,5 +23,24 @@
     height: 100%;
     background: rgba(255, 255, 255, .6);
     border-radius: 6px;
+  }
+}
+
+.trigger {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  &_main {
+    display: flex;
+    &_version {
+      font-size: 20px;
+    }
+    p {
+      margin-left: 2px;
+      margin-right: 20px;
+      font-size: 12px;
+    }
   }
 }

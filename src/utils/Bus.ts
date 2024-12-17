@@ -24,6 +24,7 @@ class Bus implements BusClass {
   // 触发
   emit(name: string, ...args: Array<any>) {
     const eventName: Array<() => void> = this.list[name];
+    console.log(this.list, "eventName00000000");
     eventName?.forEach((fn: () => void) => {
       fn.apply(this, args);
     });

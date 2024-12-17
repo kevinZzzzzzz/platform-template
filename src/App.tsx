@@ -35,7 +35,7 @@ declare global {
   设置全局变量
 */
 window.$api = { ...api };
-window.$busInc = new Bus(); // 事件总线
+!window.$busInc && (window.$busInc = new Bus()); // 事件总线
 
 function App() {
   const { t, i18n } = useTranslation();

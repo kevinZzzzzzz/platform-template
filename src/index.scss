@@ -50,7 +50,7 @@ ul {
 
 :root {
   --layout-header-height: 56px;
-  --layout-tab-height: 44px;
+  --layout-tab-height: 32px;
   --layout-footer-height: 0px;
   --layout-footer-padding: 0px 50px;
   --layout-tabs-subMenu-boxShadow: 0 3px 6px -4px rgba(0, 0, 0, .12), 0 6px 16px 0 rgba(0, 0, 0, .08), 0 9px 28px 8px rgba(0, 0, 0, .05);
@@ -73,6 +73,11 @@ ul {
     // overflow-y: auto;
     height: 100%;
   }
+  &_iframe {
+    height: 100vh;
+    width: 100%;
+    border: none;
+  }
 }
 .fixTopHeader {
   // min-height: 50px;
@@ -89,6 +94,38 @@ ul {
         color: #2362fb
       }
     }
+  }
+}
+
+.fixBottomLayout {
+  height: calc(100vh - var(--layout-header-height) - var(--layout-tab-height) - var(--layout-footer-height) - var(--layout-content-out-padding) * 2 - var(--layout-content-inner-padding) * 2);
+  overflow: hidden;
+  position: relative;
+  &_header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 20px;
+    padding-bottom: 12px;
+  }
+  &_child {
+    overflow-y: auto;
+    margin: 50px 0;
+    padding: 12px;
+    height: calc(100% - 94px);
+    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.1);
+  }
+  &_footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 44px;
+    padding-top: 12px;
+    padding-right: 50px;
+    display: flex;
+    justify-content: end;
   }
 }
 

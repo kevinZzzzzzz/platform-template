@@ -9,6 +9,9 @@ import MenuComp from "./components/MenuComp";
 import HeaderComp from "./components/HeaderComp";
 import TabsComp from "./components/TabsComp";
 import EditMode from "@/components/EditMode";
+import { LeftOutlined, RightOutlined, SlackOutlined } from "@ant-design/icons";
+import pkg from "../../../package.json";
+console.log(pkg);
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -57,6 +60,7 @@ const BaseLayout = ({ children, ...props }) => {
           collapsible
           breakpoint={sider.breakpoint}
           collapsed={collapsed}
+          trigger={<SiderTrigger collapsed={collapsed} />}
           onCollapse={(value) =>
             dispatch(changeCollapsed({ collapsed: value }))
           }
@@ -101,7 +105,22 @@ const BaseLayout = ({ children, ...props }) => {
   );
 };
 export default React.memo(BaseLayout);
-
+const SiderTrigger = React.memo((props: any) => {
+  const { collapsed } = props;
+  return (
+    <div className={styles.trigger}>
+      {collapsed ? (
+        <RightOutlined />
+      ) : (
+        <div className={styles.trigger_main}>
+          <SlackOutlined className={styles.trigger_main_version} spin={true} />
+          <p>V{pkg.version}</p>
+          <LeftOutlined />
+        </div>
+      )}
+    </div>
+  );
+});
 export const defaultGetContainer = () => {
   return document.getElementById("baseLayout");
 };

@@ -36,6 +36,15 @@ export default ({ mode, command }) => {
           },
           rewrite: (path: any) => path.replace(/^\/api/, ""),
         },
+        "/uaaApi": {
+          target: env.VITE_BASE_URL_UAA,
+          changeOrigin: true,
+          secure: false, // 解决代理https协议报错问题
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          rewrite: (path: any) => path.replace(/^\/uaaApi/, ""),
+        },
       },
     },
   });

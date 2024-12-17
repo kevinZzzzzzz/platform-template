@@ -16,5 +16,7 @@
   "cancelText": "取消",
   "confirmText": "确认",
   "selectPlaceholder": "请选择",
-  "inputPlaceholder": "请输入"
+  "inputPlaceholder": "请输入",
+  "form": "表单",
+  "coldChainWeb": "冷链云"
 }

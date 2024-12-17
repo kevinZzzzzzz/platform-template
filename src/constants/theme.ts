@@ -82,7 +82,7 @@ export const AntdStyle: IThemeProperty = {
     cellPaddingBlock: 10,
     cellPaddingInline: 10,
     cellFontSize: 12,
-    rowHoverBg: "#9ad6ff",
+    rowHoverBg: "#d4e4ef",
   },
   Tabs: {
     titleFontSizeSM: 12,
