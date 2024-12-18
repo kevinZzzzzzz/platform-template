@@ -16,6 +16,7 @@ import {
   changeActiveTabKey,
   changeHeaderTabList,
   changeMenuKey,
+  updateMenuList,
 } from "@/store/slice/LayoutSlice";
 interface LevelKeysProps {
   key?: string;
@@ -37,6 +38,17 @@ const MenuComp: React.FC = (props: any) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
+    window.$busInc.on("updateMenu", (args) => {
+      console.log(args.MenuInitList, menuKey, "updateMenu");
+      console.log(
+        args.MenuInitList.filter((d) => d.menukey === menuKey),
+        "0000000"
+      );
+      // dispatch(updateMenuList({ menuList: args.MenuInitList }));
+      // setMenuList(args.MenuInitList.filter((d) => d.menukey === menuKey));
+    });
+  }, []);
+  useEffect(() => {
     window.NProgress?.start();
     if (!isMounted.current) {
       settingMenu(flattenMenuList, true);
@@ -45,8 +57,11 @@ const MenuComp: React.FC = (props: any) => {
       settingMenu(flattenMenuList);
     }
   }, [location]);
+
   useEffect(() => {
+    dispatch(updateMenuList({ menuList: MenuInitList }));
     setMenuList(MenuInitList.filter((d) => d.menukey === menuKey));
+    console.log(MenuInitList, "menus");
   }, [props.collapsed, menuKey]);
 
   /**

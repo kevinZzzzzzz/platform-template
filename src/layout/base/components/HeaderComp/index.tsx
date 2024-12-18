@@ -9,6 +9,7 @@ import {
   LogoutOutlined,
   MoonOutlined,
   SearchOutlined,
+  DownloadOutlined,
   SunOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -21,6 +22,7 @@ import {
 import {
   Avatar,
   Button,
+  Modal,
   Dropdown,
   MenuProps,
   Space,
@@ -30,13 +32,29 @@ import {
 import { LocaleList } from "@/constants/theme";
 import { HEADER_MENU_TABS } from "@/router/imports";
 import IconComp from "../Icon";
+import { useNavigate } from "react-router-dom";
+import DownLoadDialogComp from "./DownLoadDialog";
 function HeaderComp(props: any) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { theme, fullScreen, locale, menuKey } = useAppSelector(
     (store: any) => {
       return store.Layout;
     }
   );
+  const [modelType, setModelType] = useState("");
+  const [openModel, setOpenModel] = useState(false);
+  const modelTypeMap = {
+    // 弹窗类型
+    DownLoad: {
+      width: "45%",
+      comp: () => <DownLoadDialogComp />,
+    },
+  };
+  const ModelComp = useMemo(() => {
+    return modelTypeMap[modelType]?.comp || null;
+  }, [modelType]);
+
   const LangItems: MenuProps["items"] = LocaleList.map((d) => {
     return {
       label: (
@@ -63,7 +81,12 @@ function HeaderComp(props: any) {
     },
     {
       label: (
-        <div className={styles.settingItem}>
+        <div
+          className={styles.settingItem}
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
           <LogoutOutlined />
           <p className={styles.settingItem_title}>退出登录</p>
         </div>
@@ -95,6 +118,15 @@ function HeaderComp(props: any) {
   const handleTabClick = (e: string) => {
     dispatch(changeMenuKey({ menuKey: e }));
   };
+
+  const handleModelOpen = (type) => {
+    setOpenModel(true);
+    setModelType(type);
+  };
+  const handleModelClose = () => {
+    setOpenModel(false);
+    setModelType("");
+  };
   return (
     <div className={styles.HeaderComp}>
       <div className={styles.HeaderComp_leftCtx}>
@@ -106,6 +138,11 @@ function HeaderComp(props: any) {
         />
       </div>
       <div className={styles.HeaderComp_rightCtx}>
+        <div className={styles.HeaderComp_rightCtx_item}>
+          <Tooltip placement="bottom" title={"下载"}>
+            <DownloadOutlined onClick={() => handleModelOpen("DownLoad")} />
+          </Tooltip>
+        </div>
         <div className={styles.HeaderComp_rightCtx_item}>
           <Tooltip placement="bottom" title={"搜索"}>
             <SearchOutlined />
@@ -153,6 +190,16 @@ function HeaderComp(props: any) {
           </Dropdown>
         </div>
       </div>
+      <Modal
+        width={modelTypeMap[modelType]?.width}
+        onCancel={handleModelClose}
+        open={openModel}
+        footer={null}
+        destroyOnClose={true}
+        closable={false}
+      >
+        {ModelComp ? <ModelComp /> : null}
+      </Modal>
     </div>
   );
 }

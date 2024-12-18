@@ -11,9 +11,12 @@ export const LayoutSlice = createSlice({
     headerTabList: [
       { label: "首页", path: "/home", key: "0", closable: false },
     ], // 顶部tab栏
+    menuList: [], // 菜单列表
     activeTabKey: "1", // 当前激活的页面key
     activePathInfo: {}, // 当前激活的页面信息
     menuKey: "1", // 顶部菜单Key
+    pluginList: [], // 插件列表
+    projectList: [], // 项目列表
   },
   reducers: {
     // 张开闭合sider
@@ -58,6 +61,18 @@ export const LayoutSlice = createSlice({
     changeMenuKey(state, { payload }) {
       state.menuKey = payload.menuKey;
     },
+    // 更新项目列表
+    updateProjectList(state, { payload }) {
+      state.projectList = payload.projectList;
+    },
+    // 更新插件列表
+    updatePluginList(state, { payload }) {
+      state.pluginList = payload.pluginList;
+    },
+    // 更新菜单列表
+    updateMenuList(state, { payload }) {
+      state.menuList = payload.menuList;
+    },
   },
 });
 
@@ -70,5 +85,8 @@ export const {
   changeActiveTabKey,
   changeHeaderTabList,
   changeMenuKey,
+  updateProjectList,
+  updatePluginList,
+  updateMenuList,
 } = LayoutSlice.actions;
 export default LayoutSlice.reducer;
