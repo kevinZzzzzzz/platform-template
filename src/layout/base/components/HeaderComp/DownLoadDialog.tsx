@@ -1,6 +1,8 @@
+import { updateRouter } from "@/router";
+import { generatedRoutes } from "@/router/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updateProjectList } from "@/store/slice/LayoutSlice";
-import { AsynchronousList } from "@/utils";
+import { AsynchronousList, sleep } from "@/utils";
 import { Button, message, Tabs } from "antd";
 import React, { useState, useEffect, memo, useMemo } from "react";
 import styles from "./index.module.scss";
@@ -34,14 +36,14 @@ export default DownLoadDialogComp;
 const ImportProject = memo(() => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const dispatch = useAppDispatch();
-  const { projectList, menuList } = useAppSelector((store: any) => {
+  const { projectList, menuKey } = useAppSelector((store: any) => {
     return store.Layout;
   });
   const projectListInTime = useMemo(() => {
-    return importProjectList.map((d) => {
+    return importProjectList.map((d1) => {
       return {
-        ...d,
-        status: +projectList?.includes(d.key),
+        ...d1,
+        status: projectList?.find((d2) => d2.key === d1.key) ? 1 : 0,
       };
     });
   }, [projectList]);
@@ -49,7 +51,6 @@ const ImportProject = memo(() => {
   // 安装 删除项目
   const handleImport = (item, idx) => {
     let projectListTemp = JSON.parse(JSON.stringify(projectList));
-    let menuListTemp = JSON.parse(JSON.stringify(menuList));
     AsynchronousList([
       () => {
         setLoadings((prev) => {
@@ -59,48 +60,33 @@ const ImportProject = memo(() => {
         });
       },
       () => {
-        setTimeout(() => {
+        sleep(1000).then((res: any) => {
           setLoadings((prev) => {
             let temp = [...prev];
             temp[idx] = false;
             return temp;
           });
-        }, 1000);
+        });
       },
       () => {
-        setTimeout(() => {
+        sleep(1000).then((res: any) => {
           if (item.status) {
             // 卸载
             message.success("卸载成功");
-            projectListTemp = projectListTemp.filter((d) => d !== item.key);
+            projectListTemp = projectListTemp.filter((d) => d.key !== item.key);
             dispatch(updateProjectList({ projectList: projectListTemp }));
-            menuListTemp = menuListTemp.filter(
-              (d) => d.menukey !== item.menukey
-            );
           } else {
             // 安装
             message.success("安装成功");
-            dispatch(
-              updateProjectList({ projectList: [...projectListTemp, item.key] })
-            );
-            // const obj = new ImportMenu(item);
-            // console.log(obj);
-            menuListTemp.push({
-              icon: item.icon,
-              key: item.key,
-              label: item.name,
-              path: item.path,
-              title: item.name,
-              disabled: false,
-              type: null,
-              menukey: item.menukey,
-              children: item.children,
-            });
+            projectListTemp = [...projectListTemp, item];
+            dispatch(updateProjectList({ projectList: projectListTemp }));
           }
-          window.$busInc.emit("updateMenu", {
-            MenuInitList: menuListTemp,
-          });
-        }, 1000);
+        });
+      },
+      () => {
+        sleep(2000).then((res: any) => {
+          window.location.reload();
+        });
       },
     ]);
   };

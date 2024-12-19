@@ -89,7 +89,7 @@ export const initMenuList = (data: any, isChild = false) => {
   for (const e of data.filter((d) => d.meta.needShow)) {
     const obj = {
       key: e.key,
-      icon: IconComp(e.meta.icon),
+      icon: e.meta.icon && IconComp(e.meta.icon),
       path: e.path,
       children:
         e.children && e.children.length ? initMenuList(e.children, true) : null,

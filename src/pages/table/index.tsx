@@ -111,7 +111,7 @@ class AdvancedScreening {
   }
 }
 // 高级筛选组件
-export const HeightFilterComp = memo(() => {
+export const HeightFilterComp = memo((props: any) => {
   const { t } = useTranslation();
   const [advancedScreening, setAdvancedScreening] = useState([
     new AdvancedScreening(),

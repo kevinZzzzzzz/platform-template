@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { flattenMenuList, MenuInitList } from "@/router";
+import { flattenMenuList, MenuInitList, updateRouter } from "@/router";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./index.module.scss";
@@ -16,7 +16,6 @@ import {
   changeActiveTabKey,
   changeHeaderTabList,
   changeMenuKey,
-  updateMenuList,
 } from "@/store/slice/LayoutSlice";
 interface LevelKeysProps {
   key?: string;
@@ -24,9 +23,11 @@ interface LevelKeysProps {
 }
 
 const MenuComp: React.FC = (props: any) => {
-  const { headerTabList, menuKey } = useAppSelector((store: any) => {
-    return store.Layout;
-  });
+  const { headerTabList, menuKey, projectList } = useAppSelector(
+    (store: any) => {
+      return store.Layout;
+    }
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -38,17 +39,7 @@ const MenuComp: React.FC = (props: any) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
-    window.$busInc.on("updateMenu", (args) => {
-      console.log(args.MenuInitList, menuKey, "updateMenu");
-      console.log(
-        args.MenuInitList.filter((d) => d.menukey === menuKey),
-        "0000000"
-      );
-      // dispatch(updateMenuList({ menuList: args.MenuInitList }));
-      // setMenuList(args.MenuInitList.filter((d) => d.menukey === menuKey));
-    });
-  }, []);
-  useEffect(() => {
+    updateRouter(projectList);
     window.NProgress?.start();
     if (!isMounted.current) {
       settingMenu(flattenMenuList, true);
@@ -59,9 +50,7 @@ const MenuComp: React.FC = (props: any) => {
   }, [location]);
 
   useEffect(() => {
-    dispatch(updateMenuList({ menuList: MenuInitList }));
     setMenuList(MenuInitList.filter((d) => d.menukey === menuKey));
-    console.log(MenuInitList, "menus");
   }, [props.collapsed, menuKey]);
 
   /**
@@ -124,7 +113,6 @@ const MenuComp: React.FC = (props: any) => {
     obj?.path && navigate(obj.path);
   };
   const onOpenChange = (openKeysTemp: string[]) => {
-    // console.log(openKeysTemp, "openKeysTemp--------");
     if (openKeysTemp.length) {
       setStateOpenKeys(openKeysTemp);
     } else {

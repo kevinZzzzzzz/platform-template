@@ -135,14 +135,13 @@ function TableContent(props: any) {
   };
   const showTotal: PaginationProps["showTotal"] = (total) => `总共 ${total} 条`;
 
+  const style = {
+    "--table-body-height": `${tableScrollHeight - fixTopHeight - 43 - 48}px`,
+  } as React.CSSProperties;
   return (
     <>
       <Table
-        style={{
-          "--table-body-height": `${
-            tableScrollHeight - fixTopHeight - 43 - 48
-          }px`,
-        }}
+        style={style}
         scroll={{
           x: 2000,
           y: `${tableScrollHeight - fixTopHeight - 43 - 48}px `,

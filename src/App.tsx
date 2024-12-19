@@ -1,6 +1,10 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { flattenRoutes as routes } from "./router/index";
+import {
+  flattenRoutes as routes,
+  updateFlattenRoutes,
+  updateRouter,
+} from "./router/index";
 import api from "@/api";
 import { AliveScope } from "react-activation";
 import KeepAliveComp from "@/components/KeepAliveComp";
@@ -9,18 +13,14 @@ import { Spin, ConfigProvider, theme as Theme } from "antd";
 import "dayjs/locale/zh-cn";
 // import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import {
-  AntdStyle,
-  AntdTokenStyle,
-  AntdTokenStyleMap,
-  ColorByTheme,
-} from "./constants/theme";
+import { AntdStyle, AntdTokenStyleMap, ColorByTheme } from "./constants/theme";
 import "@/locales/config";
 import { useTranslation, Trans } from "react-i18next";
 import { setupNProgress } from "./router/imports";
 import zhCN from "antd/locale/zh_CN";
 import enUS from "antd/locale/en_US";
 import { Bus } from "./utils/Bus";
+import { sleep } from "./utils";
 // import { Bus } from "js-tools-xxx";
 
 setupNProgress();
@@ -39,10 +39,14 @@ window.$api = { ...api };
 
 function App() {
   const { t, i18n } = useTranslation();
-  const { theme, locale } = useAppSelector((store) => {
+  const { theme, locale, projectList } = useAppSelector((store) => {
     return store.Layout;
   });
+  const [routesList, setRoutesList] = useState(routes);
   useEffect(() => {
+    updateRouter(projectList);
+    setRoutesList(updateFlattenRoutes(routes));
+
     window.NProgress?.start();
     window.NProgress?.done();
     i18n.changeLanguage(locale);
@@ -65,8 +69,9 @@ function App() {
           ...AntdStyle,
           Tabs: {
             cardBg: ColorByTheme[theme]["tabsCardBg"],
-            ...AntdStyle?.Tabs,
+            // ...AntdStyle?.Tabs,
           },
+          //
           Menu: AntdStyle?.Menu[theme],
         },
         token: AntdTokenStyleMap[theme] as any,
@@ -77,11 +82,8 @@ function App() {
         <AliveScope>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />}></Route>
-            <Route
-              path="/:notFoundPath"
-              element={<Navigate to="/exception/404" />}
-            ></Route>
-            {routes.map((e: any) => {
+            <Route path="/*" element={<Navigate to="/exception/404" />}></Route>
+            {routesList?.map((e: any) => {
               return (
                 <Route
                   key={e.key}
