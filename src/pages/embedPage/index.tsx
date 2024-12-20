@@ -18,9 +18,9 @@ function EmbedPage(props: any) {
     return [firstPart, secondPart];
   }
   return (
+    // src="http://192.168.120.178:8881/ColdChainWeb/index.html#/home" //
+    // src="http://192.168.120.178:8883/"
     <div className="fixTopLayout">
-      // src="http://192.168.120.178:8881/ColdChainWeb/index.html#/home" //
-      src="http://192.168.120.178:8883/"
       <iframe className="fixTopLayout_iframe" src={url}></iframe>
     </div>
   );

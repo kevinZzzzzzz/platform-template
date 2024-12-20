@@ -1,7 +1,10 @@
 import { updateRouter } from "@/router";
 import { generatedRoutes } from "@/router/routes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { updateProjectList } from "@/store/slice/LayoutSlice";
+import {
+  updateProjectList,
+  changeHeaderTabList,
+} from "@/store/slice/LayoutSlice";
 import { AsynchronousList, sleep } from "@/utils";
 import { Button, message, Tabs } from "antd";
 import React, { useState, useEffect, memo, useMemo } from "react";
@@ -36,9 +39,11 @@ export default DownLoadDialogComp;
 const ImportProject = memo(() => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const dispatch = useAppDispatch();
-  const { projectList, menuKey } = useAppSelector((store: any) => {
-    return store.Layout;
-  });
+  const { projectList, menuKey, headerTabList } = useAppSelector(
+    (store: any) => {
+      return store.Layout;
+    }
+  );
   const projectListInTime = useMemo(() => {
     return importProjectList.map((d1) => {
       return {
@@ -51,6 +56,7 @@ const ImportProject = memo(() => {
   // 安装 删除项目
   const handleImport = (item, idx) => {
     let projectListTemp = JSON.parse(JSON.stringify(projectList));
+    let headerTabListTemp = JSON.parse(JSON.stringify(headerTabList));
     AsynchronousList([
       () => {
         setLoadings((prev) => {
@@ -74,7 +80,11 @@ const ImportProject = memo(() => {
             // 卸载
             message.success("卸载成功");
             projectListTemp = projectListTemp.filter((d) => d.key !== item.key);
+            headerTabListTemp = headerTabListTemp.filter(
+              (d) => d.key !== item.key && d.key !== item.children[0].key
+            );
             dispatch(updateProjectList({ projectList: projectListTemp }));
+            dispatch(changeHeaderTabList({ headerTabList: headerTabListTemp }));
           } else {
             // 安装
             message.success("安装成功");
@@ -84,7 +94,7 @@ const ImportProject = memo(() => {
         });
       },
       () => {
-        sleep(2000).then((res: any) => {
+        sleep(1100).then((res: any) => {
           window.location.reload();
         });
       },

@@ -82,7 +82,6 @@ function App() {
         <AliveScope>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />}></Route>
-            <Route path="/*" element={<Navigate to="/exception/404" />}></Route>
             {routesList?.map((e: any) => {
               return (
                 <Route
@@ -98,6 +97,7 @@ function App() {
                 ></Route>
               );
             })}
+            <Route path="/*" element={<Navigate to="/exception/404" />}></Route>
           </Routes>
         </AliveScope>
       </BrowserRouter>
