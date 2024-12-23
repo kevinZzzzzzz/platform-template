@@ -25,7 +25,7 @@ export const importProjectList = [
     projectName: "ColdChainWeb",
     image: requireImg("/src/assets/ColdChainLogo.png"),
     key: "ColdChainWeb",
-    path: "/ColdChainWeb",
+    path: "/ColdChainWeb/home",
     layout: "layout.base",
     meta: {
       needShow: true,
@@ -36,24 +36,23 @@ export const importProjectList = [
       title: "冷链云",
       order: 1,
     },
-    children: [
-      {
-        key: "ColdChainWeb-01",
-        name: "ColdChainWeb-01",
-        path: "/ColdChainWeb/home",
-        layout: "layout.base",
-        component: "pages.embedPage",
-        meta: {
-          needShow: true,
-          icon: null,
-          i18nKey: "冷链云首页",
-          keepAlive: true,
-          menuKey: "2",
-          title: "冷链云首页",
-          order: 1,
-        },
-      },
-    ],
+  },
+  {
+    name: "冷链云2",
+    projectName: "ColdChainWeb",
+    image: requireImg("/src/assets/ColdChainLogo.png"),
+    key: "ColdChainWeb2",
+    path: "/ColdChainWeb/home",
+    layout: "layout.base",
+    meta: {
+      needShow: true,
+      icon: "CloudOutlined",
+      i18nKey: "冷链云2",
+      keepAlive: true,
+      menuKey: "2",
+      title: "冷链云2",
+      order: 1,
+    },
   },
 ];
 // {

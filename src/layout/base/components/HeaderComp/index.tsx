@@ -127,6 +127,11 @@ function HeaderComp(props: any) {
     setOpenModel(false);
     setModelType("");
   };
+  useEffect(() => {
+    window.$busInc.on("handleModel", (args) => {
+      setOpenModel(args.visible);
+    });
+  }, []);
   return (
     <div className={styles.HeaderComp}>
       <div className={styles.HeaderComp_leftCtx}>

@@ -66,3 +66,25 @@ export const sleep = async (time: any) => {
       }, time))
   );
 };
+/**
+ * @method {*} findParentByClass 通过子元素查找目标父级元素
+ * @param {*} childElement 子元素
+ * @param {*} parentClass 父元素类名
+ * @returns
+ */
+export function findParentByClass(childElement, parentClass) {
+  let currentElement = childElement;
+
+  // 循环查找父元素直到找到匹配的父元素
+  while (currentElement !== null) {
+    if (
+      currentElement.classList &&
+      currentElement.classList.contains(parentClass)
+    ) {
+      return currentElement; // 找到父元素
+    }
+    currentElement = currentElement.parentElement;
+  }
+
+  return null; // 如果没有找到，则返回 null
+}

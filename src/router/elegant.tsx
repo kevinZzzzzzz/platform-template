@@ -106,3 +106,30 @@ export const initMenuList = (data: any, isChild = false) => {
   );
   return newMenuList;
 };
+/**
+ * 初始化tabs栏
+ * @param data 路由表
+ * @param isChild 是否是子菜单
+ */
+export const initTabsList = (data: any, isChild = false) => {
+  let newTabsList: any = [];
+  for (const e of data) {
+    const obj = {
+      key: e.key,
+      icon: e.meta.icon && IconComp(e.meta.icon),
+      path: e.path,
+      children:
+        e.children && e.children.length ? initMenuList(e.children, true) : null,
+      disabled: !e.path && !(e.children && e.children.length),
+      label: e.meta.i18nKey,
+      menukey: e.meta.menuKey,
+      title: e.name,
+      type: null,
+    };
+    newTabsList.push(obj);
+  }
+  newTabsList = newTabsList.filter(
+    (d: any) => !d.children || (d.children && d.children.length)
+  );
+  return newTabsList;
+};

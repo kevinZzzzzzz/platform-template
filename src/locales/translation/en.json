@@ -18,5 +18,6 @@
   "selectPlaceholder": "SelectPlaceholder",
   "inputPlaceholder": "InputPlaceholder",
   "form": "Form",
-  "coldChainWeb": "ColdChainWeb"
+  "coldChainWeb": "ColdChainWeb",
+  "extendedPage": "ExtendedPage"
 }

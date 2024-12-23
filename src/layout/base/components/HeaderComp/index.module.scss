@@ -43,29 +43,32 @@
   min-height: 50vh;
 }
 .ImportProject {
-  max-height: 50vh;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 16px;
-  &_item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    &_info {
+  &_list {
+    margin-top: 12px;
+    max-height: 50vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 16px;
+    &_item {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      p {
-        margin-left: 10px;
-        font-size: 14px;
-        font-weight: 600;
-      }
-      img {
-        width: 50px;
-        height: 40px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      &_info {
+        display: flex;
+        align-items: center;
+        p {
+          margin-left: 10px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        img {
+          width: 50px;
+          height: 40px;
+        }
       }
     }
   }

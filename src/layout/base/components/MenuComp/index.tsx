@@ -6,7 +6,12 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { flattenMenuList, MenuInitList, updateRouter } from "@/router";
+import {
+  flattenMenuList,
+  flattenTabsList,
+  MenuInitList,
+  updateRouter,
+} from "@/router";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./index.module.scss";
@@ -39,13 +44,13 @@ const MenuComp: React.FC = (props: any) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
-    updateRouter(projectList);
+    // updateRouter(projectList);
     window.NProgress?.start();
     if (!isMounted.current) {
-      settingMenu(flattenMenuList, true);
+      settingMenu(flattenTabsList, true);
     } else {
       // 切换路由时 更新父子级菜单的激活状态
-      settingMenu(flattenMenuList);
+      settingMenu(flattenTabsList);
     }
   }, [location]);
 

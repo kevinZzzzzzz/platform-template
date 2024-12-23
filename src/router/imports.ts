@@ -60,6 +60,12 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   embedPage: lazy(
     () => import(/* webpackChunkName: "embedPage" */ "@/pages/embedPage/index")
   ),
+  extendedPage: lazy(
+    () =>
+      import(
+        /* webpackChunkName: "extendedPage" */ "@/pages/extendedPage/index"
+      )
+  ),
 };
 /** Setup plugin NProgress */
 export function setupNProgress() {

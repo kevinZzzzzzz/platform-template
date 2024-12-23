@@ -42,10 +42,10 @@ function App() {
   const { theme, locale, projectList } = useAppSelector((store) => {
     return store.Layout;
   });
-  const [routesList, setRoutesList] = useState(routes);
+  // const [routesList, setRoutesList] = useState(routes);
   useEffect(() => {
-    updateRouter(projectList);
-    setRoutesList(updateFlattenRoutes(routes));
+    // updateRouter(projectList);
+    // setRoutesList(updateFlattenRoutes(routes));
 
     window.NProgress?.start();
     window.NProgress?.done();
@@ -82,7 +82,7 @@ function App() {
         <AliveScope>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />}></Route>
-            {routesList?.map((e: any) => {
+            {routes?.map((e: any) => {
               return (
                 <Route
                   key={e.key}
