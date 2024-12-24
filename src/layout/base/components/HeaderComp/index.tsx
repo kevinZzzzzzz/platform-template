@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import styles from "./index.module.scss";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
@@ -9,6 +9,7 @@ import {
   LogoutOutlined,
   MoonOutlined,
   SearchOutlined,
+  DownloadOutlined,
   SunOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -16,14 +17,44 @@ import {
   changeFullScreen,
   changeLocale,
   changeTheme,
+  changeMenuKey,
 } from "@/store/slice/LayoutSlice";
-import { Avatar, Button, Dropdown, MenuProps, Space, Tooltip } from "antd";
+import {
+  Avatar,
+  Button,
+  Modal,
+  Dropdown,
+  MenuProps,
+  Space,
+  Tabs,
+  Tooltip,
+} from "antd";
 import { LocaleList } from "@/constants/theme";
+import { HEADER_MENU_TABS } from "@/router/imports";
+import IconComp from "../Icon";
+import { useNavigate } from "react-router-dom";
+import DownLoadDialogComp from "./DownLoadDialog";
 function HeaderComp(props: any) {
   const dispatch = useAppDispatch();
-  const { theme, fullScreen, locale } = useAppSelector((store: any) => {
-    return store.Layout;
-  });
+  const navigate = useNavigate();
+  const { theme, fullScreen, locale, menuKey } = useAppSelector(
+    (store: any) => {
+      return store.Layout;
+    }
+  );
+  const [modelType, setModelType] = useState("");
+  const [openModel, setOpenModel] = useState(false);
+  const modelTypeMap = {
+    // 弹窗类型
+    DownLoad: {
+      width: "45%",
+      comp: () => <DownLoadDialogComp />,
+    },
+  };
+  const ModelComp = useMemo(() => {
+    return modelTypeMap[modelType]?.comp || null;
+  }, [modelType]);
+
   const LangItems: MenuProps["items"] = LocaleList.map((d) => {
     return {
       label: (
@@ -50,7 +81,12 @@ function HeaderComp(props: any) {
     },
     {
       label: (
-        <div className={styles.settingItem}>
+        <div
+          className={styles.settingItem}
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
           <LogoutOutlined />
           <p className={styles.settingItem_title}>退出登录</p>
         </div>
@@ -66,10 +102,52 @@ function HeaderComp(props: any) {
   const setTheme = () => {
     dispatch(changeTheme({ theme: theme === "dark" ? "light" : "dark" }));
   };
+  /** 顶部菜单 */
+  const headerTabsItem = useMemo(() => {
+    return HEADER_MENU_TABS.map((d, idx) => {
+      return {
+        label: d.title,
+        icon: IconComp(d.icon),
+        key: d.key,
+        path: d.path,
+      };
+    });
+  }, []);
+
+  // 切换tabs
+  const handleTabClick = (e: string) => {
+    dispatch(changeMenuKey({ menuKey: e }));
+  };
+
+  const handleModelOpen = (type) => {
+    setOpenModel(true);
+    setModelType(type);
+  };
+  const handleModelClose = () => {
+    setOpenModel(false);
+    setModelType("");
+  };
+  useEffect(() => {
+    window.$busInc.on("handleModel", (args) => {
+      setOpenModel(args.visible);
+    });
+  }, []);
   return (
     <div className={styles.HeaderComp}>
-      <div className={styles.HeaderComp_leftCtx}></div>
+      <div className={styles.HeaderComp_leftCtx}>
+        <Tabs
+          defaultActiveKey={menuKey}
+          activeKey={menuKey}
+          items={headerTabsItem}
+          onTabClick={handleTabClick}
+        />
+      </div>
       <div className={styles.HeaderComp_rightCtx}>
+        <div className={styles.HeaderComp_rightCtx_item}>
+          <Tooltip placement="bottom" title={"下载"}>
+            <DownloadOutlined onClick={() => handleModelOpen("DownLoad")} />
+          </Tooltip>
+        </div>
         <div className={styles.HeaderComp_rightCtx_item}>
           <Tooltip placement="bottom" title={"搜索"}>
             <SearchOutlined />
@@ -117,6 +195,16 @@ function HeaderComp(props: any) {
           </Dropdown>
         </div>
       </div>
+      <Modal
+        width={modelTypeMap[modelType]?.width}
+        onCancel={handleModelClose}
+        open={openModel}
+        footer={null}
+        destroyOnClose={true}
+        closable={false}
+      >
+        {ModelComp ? <ModelComp /> : null}
+      </Modal>
     </div>
   );
 }

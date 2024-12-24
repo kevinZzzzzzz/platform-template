@@ -12,6 +12,7 @@ type GeneratedRoute = {
     keepAlive?: boolean;
     roles?: string[];
     needShow: boolean;
+    menuKey?: string;
   };
   children?: GeneratedRoute[];
 };
@@ -30,4 +31,8 @@ interface IThemeSetting {
   tokens: {
     [key: string]: IThemeProperty;
   };
+}
+interface ISelectOption {
+  value: string | number;
+  label: string;
 }

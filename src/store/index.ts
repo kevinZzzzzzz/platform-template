@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import LayoutReducer from "./slice/LayoutSlice";
 import BaseReducer from "./slice/BaseSlice";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";
 

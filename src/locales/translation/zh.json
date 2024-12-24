@@ -3,8 +3,21 @@
   "about": "关于",
   "exception": "异常",
   "exception1": "异常1",
+  "home2": "主页2",
+  "exception2": "异常2",
   "403": "403",
   "404": "404",
   "500": "500",
-  "login": "登录"
+  "login": "登录",
+  "table": "表格",
+  "scene": "场景",
+  "advancedScreening": "高级筛选",
+  "screeningCondition": "筛选条件",
+  "cancelText": "取消",
+  "confirmText": "确认",
+  "selectPlaceholder": "请选择",
+  "inputPlaceholder": "请输入",
+  "form": "表单",
+  "coldChainWeb": "冷链云",
+  "extendedPage": "扩展"
 }

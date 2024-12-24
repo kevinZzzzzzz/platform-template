@@ -15,6 +15,24 @@ export const LAYOUT_NAME_MAP = {
   base: BaseLayout,
   blank: BlankLayout,
 };
+
+/**
+ * 顶部菜单Tabs 列表
+ */
+export const HEADER_MENU_TABS = [
+  {
+    key: "1",
+    title: "菜单一",
+    path: "/home",
+    icon: "BarChartOutlined",
+  },
+  {
+    key: "2",
+    title: "菜单二",
+    path: "/home2",
+    icon: "LineChartOutlined",
+  },
+];
 /**
  * 页面路径映射
  */
@@ -34,6 +52,19 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
   ),
   "exception.500": lazy(
     () => import(/* webpackChunkName: "500" */ "@/pages/exception/500")
+  ),
+  table: lazy(
+    () => import(/* webpackChunkName: "table" */ "@/pages/table/index")
+  ),
+  form: lazy(() => import(/* webpackChunkName: "form" */ "@/pages/form/index")),
+  embedPage: lazy(
+    () => import(/* webpackChunkName: "embedPage" */ "@/pages/embedPage/index")
+  ),
+  extendedPage: lazy(
+    () =>
+      import(
+        /* webpackChunkName: "extendedPage" */ "@/pages/extendedPage/index"
+      )
   ),
 };
 /** Setup plugin NProgress */

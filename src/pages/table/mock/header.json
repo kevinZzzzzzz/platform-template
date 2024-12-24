@@ -1,0 +1,236 @@
+{
+  "code": 0,
+  "msg": "success",
+  "data": [
+    {
+      "id": 209,
+      "fieldId": 1101827,
+      "fieldName": "customerName",
+      "formType": "text",
+      "name": "客户名称",
+      "type": 1,
+      "width": 242,
+      "ellipsis": true
+    },
+    {
+      "id": 210,
+      "fieldId": 1101828,
+      "fieldName": "source",
+      "formType": "select",
+      "name": "客户来源",
+      "type": 3,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 211,
+      "fieldId": 1101829,
+      "fieldName": "mobile",
+      "formType": "mobile",
+      "name": "手机",
+      "type": 7,
+      "width": 124,
+      "ellipsis": true
+    },
+    {
+      "id": 212,
+      "fieldId": 1101830,
+      "fieldName": "telephone",
+      "formType": "text",
+      "name": "电话",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 213,
+      "fieldId": 1101831,
+      "fieldName": "website",
+      "formType": "website",
+      "name": "网址",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 214,
+      "fieldId": 1101836,
+      "fieldName": "email",
+      "formType": "email",
+      "name": "邮箱",
+      "type": 14,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 215,
+      "fieldId": 1101832,
+      "fieldName": "industry",
+      "formType": "select",
+      "name": "客户行业",
+      "type": 3,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 216,
+      "fieldId": 1101833,
+      "fieldName": "level",
+      "formType": "select",
+      "name": "客户级别",
+      "type": 3,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 217,
+      "fieldId": 1101834,
+      "fieldName": "nextTime",
+      "formType": "datetime",
+      "name": "下次联系时间",
+      "type": 13,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 218,
+      "fieldId": 1101835,
+      "fieldName": "remark",
+      "formType": "textarea",
+      "name": "备注",
+      "type": 2,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 219,
+      "fieldId": null,
+      "fieldName": "status",
+      "formType": "number",
+      "name": "锁定状态",
+      "type": 5,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 220,
+      "fieldId": null,
+      "fieldName": "dealStatus",
+      "formType": "select",
+      "name": "成交状态",
+      "type": 3,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 221,
+      "fieldId": null,
+      "fieldName": "lastTime",
+      "formType": "datetime",
+      "name": "最后跟进时间",
+      "type": 13,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 222,
+      "fieldId": null,
+      "fieldName": "lastContent",
+      "formType": "textarea",
+      "name": "最后跟进记录",
+      "type": 2,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 223,
+      "fieldId": null,
+      "fieldName": "detailAddress",
+      "formType": "text",
+      "name": "详细地址",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 224,
+      "fieldId": null,
+      "fieldName": "address",
+      "formType": "map_address",
+      "name": "地区定位",
+      "type": 18,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 225,
+      "fieldId": null,
+      "fieldName": "poolDay",
+      "formType": "number",
+      "name": "距进入公海天数",
+      "type": 5,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 226,
+      "fieldId": null,
+      "fieldName": "ownerUserName",
+      "formType": "text",
+      "name": "负责人",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 227,
+      "fieldId": null,
+      "fieldName": "teamMemberIds",
+      "formType": "user",
+      "name": "相关团队",
+      "type": 10,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 228,
+      "fieldId": null,
+      "fieldName": "ownerDeptName",
+      "formType": "text",
+      "name": "所属部门",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 229,
+      "fieldId": null,
+      "fieldName": "updateTime",
+      "formType": "datetime",
+      "name": "更新时间",
+      "type": 13,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 230,
+      "fieldId": null,
+      "fieldName": "createTime",
+      "formType": "datetime",
+      "name": "创建时间",
+      "type": 13,
+      "width": 100,
+      "ellipsis": true
+    },
+    {
+      "id": 231,
+      "fieldId": null,
+      "fieldName": "createUserName",
+      "formType": "text",
+      "name": "创建人",
+      "type": 1,
+      "width": 100,
+      "ellipsis": true
+    }
+  ]
+}

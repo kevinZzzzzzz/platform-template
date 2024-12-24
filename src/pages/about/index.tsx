@@ -60,7 +60,7 @@ const AboutPage = (props) => {
 
       <div
         className="fixTopLayout_child"
-        style={{ height: `calc(100% - ${fixTopHeight} - 24px)` }}
+        style={{ height: `calc(100% - ${fixTopHeight}px - 24px)` }}
       >
         <ul>
           <li>1</li>

@@ -2,8 +2,22 @@
   "home": "Home",
   "about": "About",
   "exception": "Exception",
+  "exception1": "Exception1",
+  "home2": "Home2",
+  "exception2": "Exception2",
   "403": "403",
   "404": "404",
   "500": "500",
-  "login": "Login"
+  "login": "Login",
+  "table": "Table",
+  "scene": "Scene",
+  "advancedScreening": "AdvancedScreening",
+  "screeningCondition": "ScreeningCondition",
+  "cancelText": "CancelText",
+  "confirmText": "ConfirmText",
+  "selectPlaceholder": "SelectPlaceholder",
+  "inputPlaceholder": "InputPlaceholder",
+  "form": "Form",
+  "coldChainWeb": "ColdChainWeb",
+  "extendedPage": "ExtendedPage"
 }

@@ -6,7 +6,12 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { flattenMenuList, MenuInitList } from "@/router";
+import {
+  flattenMenuList,
+  flattenTabsList,
+  MenuInitList,
+  updateRouter,
+} from "@/router";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./index.module.scss";
@@ -15,6 +20,7 @@ import {
   // changeActivePath,
   changeActiveTabKey,
   changeHeaderTabList,
+  changeMenuKey,
 } from "@/store/slice/LayoutSlice";
 interface LevelKeysProps {
   key?: string;
@@ -22,9 +28,11 @@ interface LevelKeysProps {
 }
 
 const MenuComp: React.FC = (props: any) => {
-  const { headerTabList } = useAppSelector((store: any) => {
-    return store.Layout;
-  });
+  const { headerTabList, menuKey, projectList } = useAppSelector(
+    (store: any) => {
+      return store.Layout;
+    }
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -36,17 +44,19 @@ const MenuComp: React.FC = (props: any) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
+    // updateRouter(projectList);
     window.NProgress?.start();
     if (!isMounted.current) {
-      settingMenu(flattenMenuList, true);
+      settingMenu(flattenTabsList, true);
     } else {
       // 切换路由时 更新父子级菜单的激活状态
-      settingMenu(flattenMenuList);
+      settingMenu(flattenTabsList);
     }
   }, [location]);
+
   useEffect(() => {
-    setMenuList(MenuInitList);
-  }, [props.collapsed]);
+    setMenuList(MenuInitList.filter((d) => d.menukey === menuKey));
+  }, [props.collapsed, menuKey]);
 
   /**
    * 初始化或者切换路由时, 保存menu组件的父子级菜单的激活状态
@@ -66,6 +76,7 @@ const MenuComp: React.FC = (props: any) => {
         label: t(activeItem.label || activeItem.name),
         key: activeItem.key,
         path: activeItem.path,
+        menuKey: activeItem.menukey,
       };
       const newHeaderTabList = JSON.parse(JSON.stringify(headerTabList));
       if (isInit) {
@@ -76,6 +87,7 @@ const MenuComp: React.FC = (props: any) => {
               headerTabList: [{ ...obj }],
             })
           );
+          dispatch(changeMenuKey({ menuKey: obj.menuKey }));
         }
         isMounted.current = true;
       } else {
@@ -86,15 +98,18 @@ const MenuComp: React.FC = (props: any) => {
             label: obj.label,
             key: obj.key,
             path: obj.path,
+            menuKey: obj.menuKey,
           };
           newHeaderTabList.push(item);
           // 更新headerTab组件的数据
           dispatch(changeHeaderTabList({ headerTabList: newHeaderTabList }));
           dispatch(changeActiveTabKey({ activeTabKey: item.key }));
+          dispatch(changeMenuKey({ menuKey: obj.menuKey }));
         }
       }
       // 每次路由跳转都要更新tabs激活状态
       dispatch(changeActiveTabKey({ activeTabKey: obj.key }));
+      dispatch(changeMenuKey({ menuKey: obj.menuKey }));
     }
   }
   const onClick: MenuProps["onClick"] = (e: any) => {
@@ -103,7 +118,6 @@ const MenuComp: React.FC = (props: any) => {
     obj?.path && navigate(obj.path);
   };
   const onOpenChange = (openKeysTemp: string[]) => {
-    // console.log(openKeysTemp, "openKeysTemp--------");
     if (openKeysTemp.length) {
       setStateOpenKeys(openKeysTemp);
     } else {

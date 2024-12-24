@@ -7,7 +7,7 @@
   &_rightCtx {
     flex: 1 1 auto;
     display: grid;
-    grid-template-columns: 0.3fr 0.3fr 0.3fr 0.3fr 1fr;
+    grid-template-columns: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 1fr;
     grid-gap: 1px;
     font-size: 18px;
     justify-content: center;
@@ -36,5 +36,41 @@
   justify-content: center;
   &_title {
     margin-left: 10px;
+  }
+}
+
+.DownLoadDialog {
+  min-height: 50vh;
+}
+.ImportProject {
+  &_list {
+    margin-top: 12px;
+    max-height: 50vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 16px;
+    &_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      &_info {
+        display: flex;
+        align-items: center;
+        p {
+          margin-left: 10px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        img {
+          width: 50px;
+          height: 40px;
+          object-fit: contain;
+        }
+      }
+    }
   }
 }
