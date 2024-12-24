@@ -25,35 +25,39 @@ function ExtendedPage(props: any) {
     setActiveModelKey(d.key);
     setActiveIdx(idx);
     const modelListTemp = [...modelList];
-    // if (!modelListTemp.find((d1) => d1.key === d.key)) {
-    modelListTemp.push(d);
-    setModelList(modelListTemp);
-    // }
+    if (!modelListTemp?.find((d1) => d1 && d1?.key === d.key)) {
+      modelListTemp.push(d);
+      setModelList(modelListTemp);
+    }
   };
 
   const handleBlank = (target) => {
     setActiveIdx(null);
   };
 
-  const handleCloseModel = (d) => {
+  const handleCloseModel = (d, idx) => {
     const modelListTemp = [...modelList];
-    const idx = modelListTemp.findIndex((d1) => d1.key === d.key);
-    if (idx !== -1) {
-      modelListTemp.splice(idx, 1);
-      setModelList(modelListTemp);
+    modelListTemp.splice(idx, 1, null);
+    setModelList(modelListTemp);
+
+    // 清空
+    if (modelListTemp.every((d1) => !d1)) {
+      setModelList([]);
     }
   };
   const handleZoomModel = (idx, target) => {
     const index = fullScreen.current.findIndex((d1) => d1 === idx);
     const targetRef = findParentByClass(target, styles.modelItem);
     if (index !== -1) {
+      // 最小化
       fullScreen.current.splice(index, 1);
-      targetRef.style.top = "30%";
-      targetRef.style.left = "30%";
+      targetRef.style.top = `${idx * 2 + 25}%`;
+      targetRef.style.left = `${idx * 2 + 20}%`;
       targetRef.style.transform = "translate(0px, 0px)";
       targetRef.style.width = "60vmax";
-      targetRef.style.height = "20vmax";
+      targetRef.style.height = "30vmax";
     } else {
+      // 最大化
       fullScreen.current.push(idx);
       targetRef.style.top = "0px";
       targetRef.style.left = "0px";
@@ -96,15 +100,17 @@ function ExtendedPage(props: any) {
         </div>
       </div>
       {modelList?.map((d, idx) => {
-        return (
-          <Draggable bounds="parent" handle=".modelHeader">
+        return d ? (
+          <Draggable bounds="parent">
             <div
               className={styles.modelItem}
               ref={modelRefList}
               style={{
                 zIndex: activeModelKey === d.key ? 999 : 2,
                 boxShadow:
-                  activeModelKey === d.key ? "0px 0px 10px 10px #ccc" : "none",
+                  activeModelKey === d.key ? "0px 0px 10px 2px #ccc" : "none",
+                top: `${25 + idx * 2}%`,
+                left: `${20 + idx * 2}%`,
               }}
               onClick={() => {
                 setActiveModelKey(d.key);
@@ -125,7 +131,7 @@ function ExtendedPage(props: any) {
                     <div
                       className={styles.modelHeader_control_item}
                       onClick={() => {
-                        handleCloseModel(d);
+                        handleCloseModel(d, idx);
                       }}
                     >
                       <CloseOutlined />
@@ -133,10 +139,10 @@ function ExtendedPage(props: any) {
                   </div>
                 </div>
               </div>
-              <WindowRef key={idx} info={d} />
+              <WindowRef key={idx} info={d} idx={idx} />
             </div>
           </Draggable>
-        );
+        ) : null;
       })}
     </div>
   );
@@ -144,7 +150,7 @@ function ExtendedPage(props: any) {
 export default ExtendedPage;
 
 const WindowRef = React.memo((props: any) => {
-  const info = props.info;
+  const { info, idx } = props;
   function splitPath(path) {
     const parts = path.split("/");
     // 处理路径并返回切割后的部分
@@ -157,13 +163,13 @@ const WindowRef = React.memo((props: any) => {
     const u = `${window.location.origin}${firstPart}/index.html#${secondPart}`;
     return u;
   }, [info]);
+
   return (
     <div className={styles.windowRef}>
       <iframe
-        // src={pathUrl}
-        src={"http://192.168.120.178:8883/"}
+        id="windowRef"
+        src={pathUrl}
         className={styles.windowRef_iframe}
-        frameborder="0"
       ></iframe>
     </div>
   );

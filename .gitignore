@@ -14,6 +14,7 @@ package-lock.json
 auto-import.d.ts
 
 /public/coldChainWeb
+/public/ColdChainScreen
 # misc
 .DS_Store
 .env.local
