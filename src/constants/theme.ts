@@ -6,7 +6,7 @@ export const ColorByTheme: IThemeProperty = {
     triggerColor: "#fff",
     footerBg: "rgb(255, 255, 255)",
     triggerHeight: 48,
-    tabsCardBg: "rgba(0, 0, 0, 0.04)",
+    tabsCardBg: "rgba(0,0,0, 0.01)",
   },
   dark: {
     headerBg: "rgb(28, 28, 28)",
@@ -126,6 +126,7 @@ export const AntdTokenStyleMap: IThemeProperty = {
       sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
       tab: "0 1px 2px rgb(0, 21, 41, 1)",
     },
+    controlItemBgHover: "red",
     bgColorDrawer: "#f5f6f9",
   },
   dark: {

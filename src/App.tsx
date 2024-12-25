@@ -2,8 +2,8 @@ import React, { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   flattenRoutes as routes,
-  updateFlattenRoutes,
-  updateRouter,
+  // updateFlattenRoutes,
+  // updateRouter,
 } from "./router/index";
 import api from "@/api";
 import { AliveScope } from "react-activation";
@@ -20,7 +20,7 @@ import { setupNProgress } from "./router/imports";
 import zhCN from "antd/locale/zh_CN";
 import enUS from "antd/locale/en_US";
 import { Bus } from "./utils/Bus";
-import { sleep } from "./utils";
+// import { sleep } from "./utils";
 // import { Bus } from "js-tools-xxx";
 
 setupNProgress();

@@ -19,6 +19,7 @@ import ContactPerson from "./components/contactPerson";
 import DetailedInfo from "./components/detailedInfo";
 import DrawerHeader from "./components/drawerHeader";
 import ImportantInfo from "./components/importantInfo";
+import ResizeableTable from "./components/ResizeableTable";
 
 function TableContent(props: any) {
   const [tableData, setTableData] = useState<any[]>([]);
@@ -138,10 +139,15 @@ function TableContent(props: any) {
   const style = {
     "--table-body-height": `${tableScrollHeight - fixTopHeight - 43 - 48}px`,
   } as React.CSSProperties;
+
+  const rowClassName = (record, index) => {
+    return index % 2 === 0 ? "table-even-row" : "table-odd-row";
+  };
   return (
     <>
-      <Table
+      <ResizeableTable
         style={style}
+        rowClassName={rowClassName}
         scroll={{
           x: 2000,
           y: `${tableScrollHeight - fixTopHeight - 43 - 48}px `,

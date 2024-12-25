@@ -16,6 +16,9 @@
     background-color: #C0C0C0 !important;
   }
 }
+.ant-tabs-tab:hover {
+  background-color: rgba($color: #000000, $alpha: 0.2) !important;
+}
 .ant-drawer-body {
   padding: 0 !important;
 }
