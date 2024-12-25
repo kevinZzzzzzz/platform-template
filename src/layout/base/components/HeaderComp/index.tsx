@@ -106,8 +106,10 @@ function HeaderComp(props: any) {
   const headerTabsItem = useMemo(() => {
     return HEADER_MENU_TABS.map((d, idx) => {
       return {
-        label: d.title,
-        icon: IconComp(d.icon),
+        label: <span style={{ fontSize: "16px" }}>{d.title}</span>,
+        icon: IconComp(d.icon, {
+          style: { fontSize: "20px", fontWeight: "600" },
+        }),
         key: d.key,
         path: d.path,
       };
@@ -136,6 +138,7 @@ function HeaderComp(props: any) {
     <div className={styles.HeaderComp}>
       <div className={styles.HeaderComp_leftCtx}>
         <Tabs
+          type={"card"}
           defaultActiveKey={menuKey}
           activeKey={menuKey}
           items={headerTabsItem}
