@@ -12,6 +12,7 @@ import {
   DownloadOutlined,
   SunOutlined,
   UserOutlined,
+  BgColorsOutlined,
 } from "@ant-design/icons";
 import {
   changeFullScreen,
@@ -28,6 +29,7 @@ import {
   Space,
   Tabs,
   Tooltip,
+  Drawer,
 } from "antd";
 import { LocaleList } from "@/constants/theme";
 import { HEADER_MENU_TABS } from "@/router/imports";
@@ -44,6 +46,7 @@ function HeaderComp(props: any) {
   );
   const [modelType, setModelType] = useState("");
   const [openModel, setOpenModel] = useState(false);
+  const [openThemeSetting, setOpenThemeSetting] = useState(false);
   const modelTypeMap = {
     // 弹窗类型
     DownLoad: {
@@ -129,6 +132,13 @@ function HeaderComp(props: any) {
     setOpenModel(false);
     setModelType("");
   };
+
+  const onOpenThemeSetting = () => {
+    setOpenThemeSetting(true);
+  };
+  const onCloseThemeSetting = () => {
+    setOpenThemeSetting(false);
+  };
   useEffect(() => {
     window.$busInc.on("handleModel", (args) => {
       setOpenModel(args.visible);
@@ -176,6 +186,16 @@ function HeaderComp(props: any) {
             {theme === "dark" ? <MoonOutlined /> : <SunOutlined />}
           </Tooltip>
         </div>
+        <div
+          className={styles.HeaderComp_rightCtx_item}
+          onClick={() => {
+            onOpenThemeSetting();
+          }}
+        >
+          <Tooltip placement="bottom" title={"主题配置"}>
+            <BgColorsOutlined />
+          </Tooltip>
+        </div>
         <div className={styles.HeaderComp_rightCtx_item}>
           <Tooltip placement="left" title={"切换语言"}>
             <Dropdown arrow menu={{ items: LangItems }} placement="bottom">
@@ -208,6 +228,15 @@ function HeaderComp(props: any) {
       >
         {ModelComp ? <ModelComp /> : null}
       </Modal>
+      <Drawer
+        title="主题配置"
+        onClose={onCloseThemeSetting}
+        open={openThemeSetting}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import UseDraws from "@/hooks/useDraw";
 import UseFixTop from "@/hooks/useFixTop";
 import { defaultGetContainer } from "@/layout/base";
+import { useAppSelector } from "@/store/hooks";
 import { HeartOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -22,6 +23,9 @@ import ImportantInfo from "./components/importantInfo";
 import ResizeableTable from "./components/ResizeableTable";
 
 function TableContent(props: any) {
+  const { theme } = useAppSelector((store) => {
+    return store.Layout;
+  });
   const [tableData, setTableData] = useState<any[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -111,7 +115,6 @@ function TableContent(props: any) {
   }, []);
   useEffect(() => {
     import("./mock/data.json").then((res: any) => {
-      console.log(res.default.data, "res");
       const arr = res.default.data.map((d, idx) => {
         return {
           ...d,
@@ -145,32 +148,36 @@ function TableContent(props: any) {
   };
   return (
     <>
-      <ResizeableTable
-        style={style}
-        rowClassName={rowClassName}
-        scroll={{
-          x: 2000,
-          y: `${tableScrollHeight - fixTopHeight - 43 - 48}px `,
-        }}
-        rowSelection={{ type: "checkbox", columnWidth: 48, ...rowSelection }}
-        columns={tableColumns}
-        dataSource={tableData}
-        rowKey={(recode) => {
-          return recode.index;
-        }}
-        pagination={{
-          align: "end",
-          current: pageNum,
-          pageSize: pageSize,
-          total: total,
-          showTotal: showTotal,
-          showQuickJumper: true,
-          showSizeChanger: true,
-          pageSizeOptions: [10, 20, 50, 100],
-          onShowSizeChange: onShowSizeChange,
-          onChange: onChangePageNum,
-        }}
-      />
+      {!tableColumns.length ? null : (
+        <ResizeableTable
+          style={style}
+          rowClassName={(record, index) => {
+            return index % 2 === 0 ? "table-even-row" : "table-odd-row";
+          }}
+          scroll={{
+            x: 2000,
+            y: `${tableScrollHeight - fixTopHeight - 43 - 48}px `,
+          }}
+          rowSelection={{ type: "checkbox", columnWidth: 48, ...rowSelection }}
+          columns={tableColumns}
+          dataSource={tableData}
+          rowKey={(recode) => {
+            return recode.index;
+          }}
+          pagination={{
+            align: "end",
+            current: pageNum,
+            pageSize: pageSize,
+            total: total,
+            showTotal: showTotal,
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 20, 50, 100],
+            onShowSizeChange: onShowSizeChange,
+            onChange: onChangePageNum,
+          }}
+        />
+      )}
       <Drawer
         width={"75%"}
         placement={placement}

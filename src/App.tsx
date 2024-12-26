@@ -51,6 +51,9 @@ function App() {
     window.NProgress?.done();
     i18n.changeLanguage(locale);
   }, [locale]);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
   return (
     <ConfigProvider
       locale={locale === "zh" ? zhCN : enUS}

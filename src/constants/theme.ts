@@ -83,6 +83,7 @@ export const AntdStyle: IThemeProperty = {
     cellPaddingInline: 10,
     cellFontSize: 12,
     rowHoverBg: "#d4e4ef",
+    // headerBg: "#dddddd",
   },
   Tabs: {
     titleFontSizeSM: 12,
@@ -126,7 +127,6 @@ export const AntdTokenStyleMap: IThemeProperty = {
       sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
       tab: "0 1px 2px rgb(0, 21, 41, 1)",
     },
-    controlItemBgHover: "red",
     bgColorDrawer: "#f5f6f9",
   },
   dark: {

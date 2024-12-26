@@ -33,7 +33,7 @@ ul {
  
 /* 自定义滚动条轨道 */
 * ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* 设置轨道的背景颜色 */
+  background: var(--scrollbar-track-color); /* 设置轨道的背景颜色 */
   border-radius: 5px;
 }
  
@@ -59,16 +59,24 @@ ul {
   --layout-content-inner-padding: 12px;
   --font-color-default: #000; /* 默认字体颜色 */
   --font-color-inverted: #ffffff; /* 深色主题字体颜色 */
-  .table-even-row {
-    background-color: #ffffff !important;
-  }
-  .table-odd-row {
-    background-color: #c0c0c0 !important;
-  }
+  --table-background-even-row: #fff;
+  --table-background-odd-row: #c0c0c0;
+  --scrollbar-track-color: #F1F1F1;
+  --scrollbar-thumb-color: #979494;
 }
 [data-theme='dark'] {
   --font-color-default: #ffffff;
   --font-color-inverted: #ccc;
+  --table-background-even-row: #2d2c2c;
+  --table-background-odd-row: #000;
+  --scrollbar-track-color: #2d2c2c;
+  --scrollbar-thumb-color: #5a5a5a;
+}
+.table-even-row td {
+  background-color: var(--table-background-even-row) !important;
+}
+.table-odd-row td {
+  background-color: var(--table-background-odd-row) !important;
 }
 
 .fixTopLayout {

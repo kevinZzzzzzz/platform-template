@@ -7,7 +7,7 @@
   &_rightCtx {
     flex: 1 1 auto;
     display: grid;
-    grid-template-columns: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 1fr;
+    grid-template-columns: repeat(6, 0.3fr) 1fr;
     grid-gap: 1px;
     font-size: 18px;
     justify-content: center;
