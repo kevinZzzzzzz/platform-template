@@ -74,3 +74,22 @@
     }
   }
 }
+
+.ThemeSetting {
+  padding: 12px;
+  &_blockCenter {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  &_blockBetween {
+    width: 100%;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+}

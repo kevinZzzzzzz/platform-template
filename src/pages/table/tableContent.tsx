@@ -143,9 +143,6 @@ function TableContent(props: any) {
     "--table-body-height": `${tableScrollHeight - fixTopHeight - 43 - 48}px`,
   } as React.CSSProperties;
 
-  const rowClassName = (record, index) => {
-    return index % 2 === 0 ? "table-even-row" : "table-odd-row";
-  };
   return (
     <>
       {!tableColumns.length ? null : (

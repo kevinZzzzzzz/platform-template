@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/store/hooks";
 import {
   CloseCircleFilled,
   EditOutlined,
@@ -9,7 +10,11 @@ import TextArea from "antd/es/input/TextArea";
 import React, { useState, useEffect, memo, useRef } from "react";
 import styles from "./index.module.scss";
 function ActivityComp(props: any) {
+  const { AntdTokenStyle } = useAppSelector((store) => {
+    return store.Theme;
+  });
   const [activeBlock, setActiveBlock] = useState(null);
+  const [primaryColor, setPrimaryColor] = useState(AntdTokenStyle.colorPrimary);
   const btnList = [
     {
       title: "写跟进",
@@ -65,6 +70,10 @@ function ActivityComp(props: any) {
   const handleChangeBlock = (idx) => {
     setActiveBlock(idx);
   };
+
+  const style = {
+    "--btn-hover-color": AntdTokenStyle.colorPrimary,
+  } as React.CSSProperties;
   return (
     <div className={styles.ActivityComp}>
       <div className={styles.ActivityComp_btnList}>
@@ -74,8 +83,9 @@ function ActivityComp(props: any) {
               key={idx}
               className={styles.ActivityComp_btnList_item}
               style={{
+                ...style,
                 backgroundColor:
-                  activeBlock === idx + 1 ? "#2362fb" : "#f1f5fd",
+                  activeBlock === idx + 1 ? primaryColor : "#f1f5fd",
                 color: activeBlock === idx + 1 ? "#fff" : "#666",
               }}
               onClick={() => {

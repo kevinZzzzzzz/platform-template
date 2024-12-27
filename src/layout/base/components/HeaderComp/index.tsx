@@ -36,6 +36,7 @@ import { HEADER_MENU_TABS } from "@/router/imports";
 import IconComp from "../Icon";
 import { useNavigate } from "react-router-dom";
 import DownLoadDialogComp from "./DownLoadDialog";
+import ThemeSetting from "./ThemeSetting";
 function HeaderComp(props: any) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -233,9 +234,7 @@ function HeaderComp(props: any) {
         onClose={onCloseThemeSetting}
         open={openThemeSetting}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <ThemeSetting />
       </Drawer>
     </div>
   );

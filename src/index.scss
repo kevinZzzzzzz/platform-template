@@ -5,6 +5,20 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+/* 灰色 */
+html[data-color-mode="grey"] {
+  filter: grayscale(100%);
+}
+/* 色弱 */
+html[data-color-mode="weak"] {
+  filter: invert(90%);
+}
+/* 灰色 + 色弱 */
+html[data-color-mode="grey-and-weak"] {
+  // filter: hue-rotate(-150deg) saturate(60%);
+  filter: grayscale(100%) invert(80%);
+}
 html::-webkit-scrollbar {
   display: none;
 }
@@ -47,7 +61,6 @@ ul {
 * ::-webkit-scrollbar-thumb:hover {
   background: #555; /* 设置滑块在悬停状态下的背景颜色 */
 }
-
 :root {
   --layout-header-height: 56px;
   --layout-tab-height: 32px;

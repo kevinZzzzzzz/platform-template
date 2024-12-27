@@ -1,11 +1,19 @@
+import { useAppSelector } from "@/store/hooks";
 import { Checkbox, Col, Form, Input, Row, Select } from "antd";
 import React, { useState, useEffect, memo } from "react";
 import styles from "./index.module.scss";
 
 function EditClient(props: any) {
+  const { AntdTokenStyle } = useAppSelector((store) => {
+    return store.Theme;
+  });
+
+  const style = {
+    "--btn-hover-color": AntdTokenStyle.colorPrimary,
+  } as React.CSSProperties;
   return (
     <div className={styles.EditClient}>
-      <div className={styles.EditClient_header}>
+      <div style={style} className={styles.EditClient_header}>
         <h5>基本信息</h5>
         <Form name="basic" layout="vertical" autoComplete="off">
           <Row gutter={16}>

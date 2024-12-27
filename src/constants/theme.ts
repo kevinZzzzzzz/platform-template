@@ -95,8 +95,8 @@ export const AntdStyle: IThemeProperty = {
       itemColor: "#bebec0",
       itemHoverBg: "#ffffff1a",
       itemHoverColor: "#bebec0",
-      itemSelectedBg: "#1677ff",
-      itemSelectedColor: "#fff",
+      // itemSelectedBg: "#1677ff",
+      // itemSelectedColor: "#fff",
     },
     dart: {
       itemBg: "#41464b",
@@ -143,4 +143,13 @@ export const AntdTokenStyleMap: IThemeProperty = {
     },
     bgColorDrawer: "rgb(28, 28, 28)",
   },
+};
+
+export const AntdTokenStyle = {
+  colorPrimary: "#1677ff",
+  colorLink: "#1677ff",
+  colorError: "#ff4d4f",
+  colorSuccess: "#52c41a",
+  colorWarning: "#faad14",
+  colorInfo: "#1677ff",
 };

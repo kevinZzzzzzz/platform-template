@@ -14,7 +14,7 @@
       border-radius: 5px;
     }
     &_item:hover {
-      background-color: #2362fb !important;
+      background-color: var(--btn-hover-color) !important;
       color: #fff !important;
     }
   }
@@ -68,7 +68,7 @@
     width: 4px;
     height: 14px;
     border-radius: 2px;
-    background-color: #1668dc;
+    background-color: var(--btn-hover-color);
     position: absolute;
     top: 50%;
     left: 15px;

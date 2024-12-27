@@ -11,6 +11,12 @@ function ExtendedPage(props: any) {
   const { pluginList, projectList } = useAppSelector((store: any) => {
     return store.Layout;
   });
+  const { extendedPageBackground } = useAppSelector((store) => {
+    return store.Theme;
+  });
+  const style = {
+    "--extended-page-background": extendedPageBackground,
+  } as React.CSSProperties;
   const [modelList, setModelList] = useState([]);
   const [activeIdx, setActiveIdx] = useState(null);
   const modelRefList = useRef(null);
@@ -30,7 +36,10 @@ function ExtendedPage(props: any) {
       setModelList(modelListTemp);
     }
   };
-
+  const handleSingleClick = (d, idx) => {
+    console.log(d, idx, "d, idx000000000");
+    setActiveIdx(idx);
+  };
   const handleBlank = (target) => {
     setActiveIdx(null);
   };
@@ -69,6 +78,7 @@ function ExtendedPage(props: any) {
   return (
     <div
       className={styles.ExtendedPage}
+      style={{ ...style }}
       onClick={(e) => {
         handleBlank(e);
       }}
@@ -88,6 +98,10 @@ function ExtendedPage(props: any) {
                       : "transparent",
                 }}
                 className={styles.ExtendedPage_desktop_appList_item}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSingleClick(d, idx);
+                }}
                 onDoubleClick={() => {
                   handleDblClick(d, idx);
                 }}

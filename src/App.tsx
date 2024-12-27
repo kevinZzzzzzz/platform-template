@@ -13,7 +13,7 @@ import { Spin, ConfigProvider, theme as Theme } from "antd";
 import "dayjs/locale/zh-cn";
 // import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { AntdStyle, AntdTokenStyleMap, ColorByTheme } from "./constants/theme";
+// import { AntdStyle, AntdTokenStyleMap, ColorByTheme } from "./constants/theme";
 import "@/locales/config";
 import { useTranslation, Trans } from "react-i18next";
 import { setupNProgress } from "./router/imports";
@@ -39,6 +39,16 @@ window.$api = { ...api };
 
 function App() {
   const { t, i18n } = useTranslation();
+  const {
+    greyMode,
+    colorWeaknessMode,
+    ColorByTheme,
+    AntdStyle,
+    AntdTokenStyleMap,
+    AntdTokenStyle,
+  } = useAppSelector((store) => {
+    return store.Theme;
+  });
   const { theme, locale, projectList } = useAppSelector((store) => {
     return store.Layout;
   });
@@ -53,7 +63,17 @@ function App() {
   }, [locale]);
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+    if (greyMode && colorWeaknessMode) {
+      document.documentElement.setAttribute("data-color-mode", "grey-and-weak");
+    } else if (greyMode && !colorWeaknessMode) {
+      document.documentElement.setAttribute("data-color-mode", "grey");
+    } else if (!greyMode && colorWeaknessMode) {
+      document.documentElement.setAttribute("data-color-mode", "weak");
+    } else {
+      document.documentElement.setAttribute("data-color-mode", "none");
+    }
+  }, [theme, greyMode, colorWeaknessMode]);
+
   return (
     <ConfigProvider
       locale={locale === "zh" ? zhCN : enUS}
@@ -77,7 +97,10 @@ function App() {
           //
           Menu: AntdStyle?.Menu[theme],
         },
-        token: AntdTokenStyleMap[theme] as any,
+        token: {
+          ...(AntdTokenStyleMap[theme] as any),
+          ...AntdTokenStyle,
+        },
       }}
       // locale={locale}
     >
