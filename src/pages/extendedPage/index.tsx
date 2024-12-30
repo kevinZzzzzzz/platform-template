@@ -37,7 +37,6 @@ function ExtendedPage(props: any) {
     }
   };
   const handleSingleClick = (d, idx) => {
-    console.log(d, idx, "d, idx000000000");
     setActiveIdx(idx);
   };
   const handleBlank = (target) => {

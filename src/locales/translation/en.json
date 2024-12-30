@@ -19,5 +19,6 @@
   "inputPlaceholder": "InputPlaceholder",
   "form": "Form",
   "coldChainWeb": "ColdChainWeb",
-  "extendedPage": "ExtendedPage"
+  "extendedPage": "ExtendedPage",
+  "pluginTextPage": "PluginTextPage"
 }

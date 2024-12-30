@@ -15,6 +15,7 @@ auto-import.d.ts
 
 /public/coldChainWeb
 /public/ColdChainScreen
+/public/PluginsList
 # misc
 .DS_Store
 .env.local

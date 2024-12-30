@@ -86,6 +86,7 @@ function HeaderComp(props: any) {
     {
       label: (
         <div
+          style={{ color: "red" }}
           className={styles.settingItem}
           onClick={() => {
             navigate("/login");

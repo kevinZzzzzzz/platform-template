@@ -289,6 +289,23 @@ export const generatedRoutes: GeneratedRoute[] = [
     children: [],
   },
   {
+    key: "pluginTextPage",
+    name: "PluginTextPage",
+    path: "/pluginTextPage",
+    layout: "layout.base",
+    component: "pages.pluginTextPage",
+    meta: {
+      title: "pluginTextPage",
+      i18nKey: "pluginTextPage",
+      icon: "DesktopOutlined",
+      keepAlive: true,
+      order: 1,
+      needShow: false,
+      menuKey: "1",
+    },
+    children: [],
+  },
+  {
     key: "99",
     name: "Login",
     path: "/login",

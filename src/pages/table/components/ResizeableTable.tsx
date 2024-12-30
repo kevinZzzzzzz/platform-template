@@ -60,8 +60,21 @@ const ResizeableTable: React.FC<TableProps> = (props: any) => {
         return false;
       })
     );
+    // handleFilterTableHeader();
   }, []);
-
+  const handleFilterTableHeader = () => {
+    const columnsTemp = columns;
+    const filterHeader = columnsTemp
+      .slice(0, columnsTemp.length - 1)
+      .map((a) => {
+        return {
+          text: a.title,
+          value: a.title,
+        };
+      });
+    columnsTemp[columnsTemp.length - 1].filters = filterHeader;
+    setColumns(columnsTemp);
+  };
   const handleResize =
     (index) =>
     (e, { size }) => {

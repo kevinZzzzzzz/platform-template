@@ -57,8 +57,11 @@ export const ROUTER_NAME_TO_PAGES_MAP = {
     () => import(/* webpackChunkName: "table" */ "@/pages/table/index")
   ),
   form: lazy(() => import(/* webpackChunkName: "form" */ "@/pages/form/index")),
-  embedPage: lazy(
-    () => import(/* webpackChunkName: "embedPage" */ "@/pages/embedPage/index")
+  pluginTextPage: lazy(
+    () =>
+      import(
+        /* webpackChunkName: "pluginTextPage" */ "@/pages/pluginTextPage/index"
+      )
   ),
   extendedPage: lazy(
     () =>

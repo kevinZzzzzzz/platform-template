@@ -88,3 +88,38 @@ export function findParentByClass(childElement, parentClass) {
 
   return null; // 如果没有找到，则返回 null
 }
+
+/**
+ * 导入插件至全局
+ * @params id 插件id
+ */
+export const importPlugin = (id) => {
+  const script = document.createElement("script");
+  script.src = `PluginsList/p${id}.js`;
+  script.type = "module";
+  // script.async = true;
+  // script.defer = true;
+  document.body.appendChild(script);
+  import(
+    /* @vite-ignore */ `${window.location.origin}/PluginsList/p${id}.js`
+  ).then((res) => {
+    window.$plugins[`P${id}`] = res.default;
+  });
+  // notification.open({
+  //   message: `插件${id}运行成功`,
+  //   description: `插件${id}运行成功`,
+  //   icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+  // });
+};
+/**
+ * 删除全局插件脚本
+ */
+export const removePlugin = (id) => {
+  const scriptList = document.getElementsByTagName("script");
+  for (const i of scriptList) {
+    if (i.getAttribute("src") == `PluginsList/p${id}.js`) {
+      i.parentNode.removeChild(i);
+    }
+  }
+  delete window.$plugins[`P${id}`];
+};

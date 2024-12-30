@@ -9,7 +9,7 @@ import api from "@/api";
 import { AliveScope } from "react-activation";
 import KeepAliveComp from "@/components/KeepAliveComp";
 import LoadingComp from "./components/Loading";
-import { Spin, ConfigProvider, theme as Theme } from "antd";
+import { Spin, ConfigProvider, theme as Theme, message } from "antd";
 import "dayjs/locale/zh-cn";
 // import locale from "antd/locale/zh_CN";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -20,6 +20,7 @@ import { setupNProgress } from "./router/imports";
 import zhCN from "antd/locale/zh_CN";
 import enUS from "antd/locale/en_US";
 import { Bus } from "./utils/Bus";
+import { importPlugin } from "./utils";
 // import { sleep } from "./utils";
 // import { Bus } from "js-tools-xxx";
 
@@ -29,6 +30,7 @@ declare global {
     $api: any;
     NProgress: any;
     $busInc: any;
+    $plugins: any;
   }
 }
 /* 
@@ -37,6 +39,19 @@ declare global {
 window.$api = { ...api };
 !window.$busInc && (window.$busInc = new Bus()); // 事件总线
 
+// 插件全局拦截
+window.$plugins = new Proxy(
+  {},
+  {
+    get(target, key) {
+      if (!Reflect.has(target, key)) {
+        message.warning("请先至插件市场下载插件～～～");
+        return false;
+      }
+      return Reflect.get(target, key);
+    },
+  }
+);
 function App() {
   const { t, i18n } = useTranslation();
   const {
@@ -49,9 +64,16 @@ function App() {
   } = useAppSelector((store) => {
     return store.Theme;
   });
-  const { theme, locale, projectList } = useAppSelector((store) => {
+  const { theme, locale, pluginList } = useAppSelector((store) => {
     return store.Layout;
   });
+
+  useEffect(() => {
+    // 安装插件
+    pluginList.forEach((item) => {
+      importPlugin(item.key);
+    });
+  }, []);
   // const [routesList, setRoutesList] = useState(routes);
   useEffect(() => {
     // updateRouter(projectList);
