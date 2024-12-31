@@ -9,7 +9,19 @@
   top: 50%;
   transform: translateY(-50%);
   right: 0px;
+  z-index: 1;
   cursor: col-resize;
   background: #ddd;
-  z-index: 999;
+  // z-index: 999;
+}
+.tableRef {
+  position: relative;
+  z-index: 1;
+  &_filterBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    cursor: pointer;
+  }
 }

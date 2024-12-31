@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Table } from "antd";
+import React, { useEffect, useState, useMemo, memo } from "react";
+import { Popconfirm, Table } from "antd";
 // import "antd/dist/antd.css";
 import { Resizable } from "react-resizable";
 import "./resizeable-table.scss";
+import { FilterFilled } from "@ant-design/icons";
 
 interface TableProps {
   style?: React.CSSProperties;
@@ -16,7 +17,6 @@ interface TableProps {
   dataSource: any[];
   rowKey: (record: any) => any;
   pagination?: any;
-  filterHeader: boolean;
 }
 const ResizeableTitle: React.FC = (props: any) => {
   const [resizing, setResizing] = useState(false);
@@ -50,13 +50,9 @@ const ResizeableTitle: React.FC = (props: any) => {
 };
 
 const ResizeableTable: React.FC<TableProps> = (props: any) => {
-  const [columns, setColumns] = useState(
-    props.filterHeader ? [] : props.columns
-  );
-  const [filterHeader, setFilterHeader] = useState([]);
+  const [columns, setColumns] = useState(props.columns);
   useEffect(() => {
-    console.log(props.filterHeader, " props.filterHeader && ----");
-    handleFilterTableHeader(true);
+    // handleFilterTableHeader();
     const handlers = document.querySelectorAll(
       ".react-resizable .react-resizable-handle"
     );
@@ -67,39 +63,16 @@ const ResizeableTable: React.FC<TableProps> = (props: any) => {
       })
     );
   }, []);
-  const handleFilterTableHeader = (init = false, filters = []) => {
-    if (!props.filterHeader) return false;
-    if (init) {
-      const columnsTemp = props.columns;
-      const filterHeaderTemp = columnsTemp
-        .slice(0, columnsTemp.length - 1)
-        .map((a) => {
-          return {
-            text: a.title,
-            value: a.title,
-          };
-        });
-      setFilterHeader(filterHeaderTemp);
-      columnsTemp[columnsTemp.length - 1].filters = filterHeaderTemp;
-      columnsTemp[columnsTemp.length - 1].filterResetToDefaultFilteredValue =
-        true;
-      columnsTemp[columnsTemp.length - 1].defaultFilteredValue = columnsTemp[
-        columnsTemp.length - 1
-      ].filteredValue = filterHeaderTemp.map((d) => d.value);
-      columnsTemp[columnsTemp.length - 1].filterSearch = true;
-      columnsTemp[columnsTemp.length - 1].filterOnClose = true;
-      setColumns(columnsTemp);
-    } else {
-      const last = props.columns[props.columns.length - 1];
-      const columnsTemp = props.columns.filter((d) =>
-        filters.includes(d.title)
-      );
-      columnsTemp.push(last);
-      columnsTemp[columnsTemp.length - 1].filteredValue = filterHeader
-        .filter((d) => filters.includes(d.value))
-        .map((d) => d.value);
-      setColumns(columnsTemp);
-    }
+  const handleFilterTableHeader = () => {
+    const columnsTemp = props.columns;
+    const filterHeader = columnsTemp
+      .slice(0, columnsTemp.length - 1)
+      .map((a) => {
+        return {
+          text: a.title,
+          value: a.title,
+        };
+      });
   };
   const handleResize =
     (index) =>
@@ -139,19 +112,36 @@ const ResizeableTable: React.FC<TableProps> = (props: any) => {
       action: "filter";
     }
   ) => {
-    if (filters) {
-      // console.log(pagination, filters);
-      handleFilterTableHeader(false, filters.follow);
-    }
+    console.log(pagination, filters);
   };
   return (
-    <Table
-      {...props}
-      onChange={onChangeFilter}
-      columns={columnsTemp}
-      components={components}
-    />
+    <div className="tableRef">
+      {/* <div className="tableRef_filterBtn">
+        <Popconfirm
+          placement="bottom"
+          title=""
+          icon={null}
+          description={<FilterSelectHeader />}
+          // onConfirm={confirm}
+          // onCancel={cancel}
+          okText="确定"
+          cancelText="取消"
+        >
+          <FilterFilled />
+        </Popconfirm>
+      </div> */}
+      <Table
+        {...props}
+        onChange={onChangeFilter}
+        columns={columnsTemp}
+        components={components}
+      />
+    </div>
   );
 };
 
 export default ResizeableTable;
+
+const FilterSelectHeader = memo(() => {
+  return <>123</>;
+});

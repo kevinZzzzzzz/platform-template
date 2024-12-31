@@ -20,7 +20,7 @@ const ThemeOptions = [
 ];
 function ThemeSetting(props: any) {
   const dispatch = useAppDispatch();
-  const { theme, locale, projectList } = useAppSelector((store) => {
+  const { theme } = useAppSelector((store) => {
     return store.Layout;
   });
   const {

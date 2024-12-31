@@ -67,6 +67,7 @@ function TableContent(props: any) {
           rowKey={(recode) => {
             return recode.index;
           }}
+          filterHeader
           pagination={{
             align: "end",
             current: pageNum,
