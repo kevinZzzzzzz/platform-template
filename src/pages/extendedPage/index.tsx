@@ -5,9 +5,12 @@ import styles from "./index.module.scss";
 import Draggable from "react-draggable";
 import { CloseOutlined, ExpandOutlined } from "@ant-design/icons";
 import { findParentByClass } from "@/utils";
+import { useNavigate } from "react-router-dom";
+import WujieReact from "wujie-react";
 
 function ExtendedPage(props: any) {
   const dispatch = useAppDispatch();
+  const { setupApp, preloadApp, bus } = WujieReact;
   const { pluginList, projectList } = useAppSelector((store: any) => {
     return store.Layout;
   });
@@ -24,7 +27,22 @@ function ExtendedPage(props: any) {
   const [activeModelKey, setActiveModelKey] = useState(null);
   useEffect(() => {
     dispatch(changeCollapsed({ collapsed: true }));
-    // console.log("projectList", projectList);
+    console.log("projectList", projectList);
+    // setupApp({
+    //   name: "ColdChainWeb",
+    //   url: "http://192.168.120.178:8881/ColdChainWeb/index.html#/login",
+    //   exec: true,
+    //   beforeLoad: (appWindow) =>
+    //     console.log(appWindow, `${appWindow.__WUJIE.id} beforeLoad 生命周期`),
+    //   beforeMount: (appWindow) =>
+    //     console.log(`${appWindow.__WUJIE.id} beforeMount 生命周期`),
+    //   afterMount: (appWindow) =>
+    //     console.log(`${appWindow.__WUJIE.id} afterMount 生命周期`),
+    // });
+    // preloadApp({
+    //   url: "http://192.168.120.178:8881/ColdChainWeb/index.html#/login",
+    //   name: "ColdChainWeb",
+    // });
   }, [projectList, pluginList]);
 
   const handleDblClick = (d, idx) => {
@@ -114,7 +132,7 @@ function ExtendedPage(props: any) {
       </div>
       {modelList?.map((d, idx) => {
         return d ? (
-          <Draggable bounds="parent">
+          <Draggable bounds="parent" key={idx}>
             <div
               className={styles.modelItem}
               ref={modelRefList}
@@ -164,6 +182,7 @@ export default ExtendedPage;
 
 const WindowRef = React.memo((props: any) => {
   const { info, idx } = props;
+  const navigation = useNavigate();
   function splitPath(path) {
     const parts = path.split("/");
     // 处理路径并返回切割后的部分
@@ -174,16 +193,30 @@ const WindowRef = React.memo((props: any) => {
   const pathUrl = useMemo(() => {
     const [firstPart, secondPart] = splitPath(info.path);
     const u = `${window.location.origin}${firstPart}/index.html#${secondPart}`;
-    return u;
-  }, [info]);
 
+    return "http://192.168.120.178:8888/";
+  }, [info]);
+  console.log(pathUrl);
+  const props1 = {
+    jump: (name) => {
+      navigation(`/${name}`);
+    },
+  };
   return (
     <div className={styles.windowRef}>
-      <iframe
+      {/* <iframe
         id="windowRef"
         src={pathUrl}
         className={styles.windowRef_iframe}
-      ></iframe>
+      ></iframe> */}
+      <WujieReact
+        sync={true}
+        width="100%"
+        height="100%"
+        // degrade={true}
+        name={info.projectName}
+        url={pathUrl}
+      ></WujieReact>
     </div>
   );
 });
