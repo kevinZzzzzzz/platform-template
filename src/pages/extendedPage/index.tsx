@@ -7,6 +7,7 @@ import { CloseOutlined, ExpandOutlined } from "@ant-design/icons";
 import { findParentByClass } from "@/utils";
 import { useNavigate } from "react-router-dom";
 import WujieReact from "wujie-react";
+import { DocElementRectPlugin, WindowSizePlugin } from "wujie-polyfill";
 
 function ExtendedPage(props: any) {
   const dispatch = useAppDispatch();
@@ -28,21 +29,6 @@ function ExtendedPage(props: any) {
   useEffect(() => {
     dispatch(changeCollapsed({ collapsed: true }));
     console.log("projectList", projectList);
-    // setupApp({
-    //   name: "ColdChainWeb",
-    //   url: "http://192.168.120.178:8881/ColdChainWeb/index.html#/login",
-    //   exec: true,
-    //   beforeLoad: (appWindow) =>
-    //     console.log(appWindow, `${appWindow.__WUJIE.id} beforeLoad 生命周期`),
-    //   beforeMount: (appWindow) =>
-    //     console.log(`${appWindow.__WUJIE.id} beforeMount 生命周期`),
-    //   afterMount: (appWindow) =>
-    //     console.log(`${appWindow.__WUJIE.id} afterMount 生命周期`),
-    // });
-    // preloadApp({
-    //   url: "http://192.168.120.178:8881/ColdChainWeb/index.html#/login",
-    //   name: "ColdChainWeb",
-    // });
   }, [projectList, pluginList]);
 
   const handleDblClick = (d, idx) => {
@@ -194,7 +180,7 @@ const WindowRef = React.memo((props: any) => {
     const [firstPart, secondPart] = splitPath(info.path);
     const u = `${window.location.origin}${firstPart}/index.html#${secondPart}`;
 
-    return "http://192.168.120.178:8888/";
+    return u;
   }, [info]);
   console.log(pathUrl);
   const props1 = {
@@ -204,19 +190,24 @@ const WindowRef = React.memo((props: any) => {
   };
   return (
     <div className={styles.windowRef}>
-      {/* <iframe
+      <iframe
         id="windowRef"
         src={pathUrl}
         className={styles.windowRef_iframe}
-      ></iframe> */}
-      <WujieReact
+      ></iframe>
+      {/* <WujieReact
         sync={true}
         width="100%"
         height="100%"
         // degrade={true}
         name={info.projectName}
         url={pathUrl}
-      ></WujieReact>
+        plugins={[
+          WindowSizePlugin({
+            shadow: true,
+          }),
+        ]}
+      ></WujieReact> */}
     </div>
   );
 });

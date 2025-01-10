@@ -29,6 +29,7 @@
     "react-router-dom": "^6.8.1",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "wujie-polyfill": "^1.1.2",
     "wujie-react": "^1.0.24"
   },
   "lint-staged": {
