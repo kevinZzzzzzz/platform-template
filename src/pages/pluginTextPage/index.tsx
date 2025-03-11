@@ -5,7 +5,7 @@ import { useAppSelector } from "@/store/hooks";
 import { requireImg } from "@/utils";
 import { Empty, notification } from "antd";
 import { importPluginList } from "@/layout/base/components/HeaderComp/mock";
-
+import chajianIcon from "@/assets/chajian.png";
 function PluginTextPage(props: any) {
   const { pluginList } = useAppSelector((store) => {
     return store.Layout;
@@ -44,7 +44,7 @@ function PluginTextPage(props: any) {
                     opacity: d.status ? 1 : 0.5,
                   }}
                 >
-                  <img src={requireImg("/src/assets/chajian.png")} alt="" />
+                  <img src={chajianIcon} alt="" />
                   <div className={styles.pluginList_item_info_name}>
                     <p>{d.name}</p>
                     <h6>{d.description}</h6>

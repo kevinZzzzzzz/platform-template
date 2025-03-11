@@ -1,6 +1,7 @@
 import { requireImg } from "@/utils";
 import { CloudOutlined } from "@ant-design/icons";
-
+import ColdChainLogo from "@/assets/ColdChainLogo.png";
+import SendUavIcon from "@/assets/SendUavIcon.png";
 export class ImportMenu {
   icon: string;
   key: string;
@@ -23,7 +24,7 @@ export const importProjectList = [
   {
     name: "冷链云",
     projectName: "ColdChainWeb",
-    image: requireImg("/src/assets/ColdChainLogo.png"),
+    image: ColdChainLogo,
     key: "ColdChainWeb",
     path: "/ColdChainWeb/home",
     layout: "layout.base",
@@ -40,7 +41,7 @@ export const importProjectList = [
   {
     name: "空地一体",
     projectName: "ColdChainScreen",
-    image: requireImg("/src/assets/SendUavIcon.png"),
+    image: SendUavIcon,
     key: "ColdChainScreen",
     path: "/ColdChainScreen/",
     layout: "layout.base",

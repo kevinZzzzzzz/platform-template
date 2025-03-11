@@ -6,12 +6,12 @@ import Draggable from "react-draggable";
 import { CloseOutlined, ExpandOutlined } from "@ant-design/icons";
 import { findParentByClass } from "@/utils";
 import { useNavigate } from "react-router-dom";
-import WujieReact from "wujie-react";
-import { DocElementRectPlugin, WindowSizePlugin } from "wujie-polyfill";
+// import WujieReact from "wujie-react";
+// import { DocElementRectPlugin, WindowSizePlugin } from "wujie-polyfill";
 
 function ExtendedPage(props: any) {
   const dispatch = useAppDispatch();
-  const { setupApp, preloadApp, bus } = WujieReact;
+  // const { setupApp, preloadApp, bus } = WujieReact;
   const { pluginList, projectList } = useAppSelector((store: any) => {
     return store.Layout;
   });
@@ -178,11 +178,12 @@ const WindowRef = React.memo((props: any) => {
   }
   const pathUrl = useMemo(() => {
     const [firstPart, secondPart] = splitPath(info.path);
-    const u = `${window.location.origin}${firstPart}/index.html#${secondPart}`;
-
+    const hostUri = `${window.location.origin}/${
+      import.meta.env.VITE_BASE_PATH
+    }/${firstPart}`;
+    const u = `${hostUri}/index.html#${secondPart}`;
     return u;
   }, [info]);
-  console.log(pathUrl);
   const props1 = {
     jump: (name) => {
       navigation(`/${name}`);

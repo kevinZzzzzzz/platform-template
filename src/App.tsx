@@ -78,7 +78,6 @@ function App() {
   useEffect(() => {
     // updateRouter(projectList);
     // setRoutesList(updateFlattenRoutes(routes));
-
     window.NProgress?.start();
     window.NProgress?.done();
     i18n.changeLanguage(locale);
@@ -126,7 +125,7 @@ function App() {
       }}
       // locale={locale}
     >
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.VITE_BASE_PATH}>
         <AliveScope>
           <Routes>
             <Route path="/" element={<Navigate to="/home" />}></Route>

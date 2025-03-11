@@ -17,7 +17,7 @@ import React, { useState, useEffect, memo, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
 import { importProjectList, importPluginList } from "./mock";
-
+import chaJianIcon from "@/assets/chajian.png";
 const DownLoadDialogComp: React.FC = (props: any) => {
   const tabsItems = [
     {
@@ -229,7 +229,7 @@ const ImportPlugin = memo(() => {
                   opacity: d.status ? 0.5 : 1,
                 }}
               >
-                <img src={requireImg("/src/assets/chajian.png")} alt="" />
+                <img src={chaJianIcon} alt="" />
                 <div className={styles.ImportProject_list_item_info_name}>
                   <p>{d.name}</p>
                   <h6>{d.description}</h6>

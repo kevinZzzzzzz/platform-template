@@ -3,13 +3,14 @@
 # dependencies
 /node_modules
 /stats.html
-pnpm-lock.yaml
+# pnpm-lock.yaml
 package-lock.json
 # testing
 /coverage
 # production
 /build
 /dist
+/sys2
 .eslintrc-auto-import.json
 auto-import.d.ts
 

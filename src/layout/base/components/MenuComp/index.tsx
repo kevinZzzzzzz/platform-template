@@ -10,7 +10,7 @@ import {
   flattenMenuList,
   flattenTabsList,
   MenuInitList,
-  updateRouter,
+  // updateRouter,
 } from "@/router";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";

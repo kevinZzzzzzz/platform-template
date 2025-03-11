@@ -34,6 +34,7 @@ export const getTargetIncludeElement = (node, targetClass) => {
  * @param imgPath: string
  */
 export const requireImg = (imgPath: string) => {
+  console.log(import.meta, "import.meta.ur00000");
   return new URL(imgPath, import.meta.url).href;
 };
 

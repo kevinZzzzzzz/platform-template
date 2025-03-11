@@ -1,11 +1,30 @@
-import React from "react";
+import { Button, Modal } from "antd";
+import React, { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
+const AboutPageComp = React.lazy(() => import("remoteMain/AboutPage"));
 
-const HomePage = () => {
+const HomePage = (props: any) => {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const Comp = memo((props: any) => {
+    return <AboutPageComp>{props.children}</AboutPageComp>;
+  });
+  const openMainSysAboutPage = () => {
+    setIsModalOpen(true);
+  };
   return (
     <>
       <h1>{t("home")} Page</h1>
+      <Button
+        color="cyan"
+        variant="solid"
+        onClick={() => {
+          openMainSysAboutPage();
+        }}
+      >
+        打开主系统的About页面
+      </Button>
+      {props.children}
       <ul>
         <li>1</li>
         <li>2</li>
@@ -108,6 +127,20 @@ const HomePage = () => {
         <li>99</li>
         <li>100</li>
       </ul>
+
+      <Modal
+        title="主系统的about页面"
+        open={isModalOpen}
+        cancelText={null}
+        okText={null}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+      >
+        <Comp>
+          <h4>hello world</h4>
+        </Comp>
+      </Modal>
     </>
   );
 };

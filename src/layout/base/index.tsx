@@ -1,4 +1,4 @@
-import React, { PureComponent, useEffect, useState } from "react";
+import React, { PureComponent, Suspense, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { Card, ConfigProvider, Layout, Menu, Tabs, theme } from "antd";
@@ -11,7 +11,9 @@ import TabsComp from "./components/TabsComp";
 import EditMode from "@/components/EditMode";
 import { LeftOutlined, RightOutlined, SlackOutlined } from "@ant-design/icons";
 import pkg from "../../../package.json";
-console.log(pkg);
+// import HomePage from "remote_main/HomePage";
+
+const CommonNavComp = React.lazy(() => import("remoteMain/CommonNavComp"));
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,6 +50,9 @@ const BaseLayout = ({ children, ...props }) => {
   });
   return (
     <div className={styles.main}>
+      <Suspense fallback="loading...">
+        <CommonNavComp />
+      </Suspense>
       <Layout
         id="baseLayout"
         style={{
